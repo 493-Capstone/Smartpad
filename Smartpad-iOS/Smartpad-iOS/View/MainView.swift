@@ -8,28 +8,29 @@
 import UIKit
 
 class MainView: UIView {
-
+    var status: ConnStatus = ConnStatus.Unpaired
+    
     override func draw(_ rect: CGRect) {
-        // TODO: Pass the true conn status
-        drawConnStatus(status: ConnStatus.Unpaired)
-//        drawConnStatus(status: ConnStatus.PairedAndConnected)
-//        drawConnStatus(status: ConnStatus.PairedAndDisconnected)
+        drawConnStatus()
     }
 
     /**
      * @brief: Draws the connection indicator in the top left of the screen
      */
-    func drawConnStatus(status: ConnStatus) {
+    func drawConnStatus() {
         var path = UIBezierPath()
         path = UIBezierPath(ovalIn: CGRect(x: 25, y: 50, width: 30, height: 30))
         switch status {
             case ConnStatus.Unpaired:
+                UIColor.red.setStroke()
                 UIColor.red.setFill()
 
             case ConnStatus.PairedAndDisconnected:
+                UIColor.yellow.setStroke()
                 UIColor.yellow.setFill()
 
             case ConnStatus.PairedAndConnected:
+                UIColor.green.setStroke()
                 UIColor.green.setFill()
         }
 

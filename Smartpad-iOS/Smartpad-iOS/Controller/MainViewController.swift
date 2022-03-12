@@ -27,6 +27,10 @@ class MainViewController: UIViewController {
         
         /* Setup the haptic engine */
         hapticManager = HapticManager()
+
+        /* TODO: Set the true connection status! */
+        // Hint: We can use setNeedsDisplay() to redraw!
+        (self.view as! MainView).status = ConnStatus.PairedAndConnected
     }
 
     func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
@@ -51,6 +55,9 @@ class MainViewController: UIViewController {
     @IBAction func settingsButtonPressed() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "settings") as! SettingsViewController
         vc.modalPresentationStyle = .fullScreen
+
+        /* TODO: Pass the true conn status */
+        vc.connStatus = ConnStatus.Unpaired
         present(vc, animated: true)
     }
 }

@@ -11,6 +11,9 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet var backButton: UIButton!
 
+    /* Passed on initialization */
+    var connStatus: ConnStatus!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
