@@ -16,9 +16,13 @@ class MainViewController: UIViewController {
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
 
+    @IBOutlet var settingsButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        /* Setup the connection manager */
         connectionManager = ConnectionManager()
         
         /* Setup the haptic engine */
@@ -45,6 +49,10 @@ class MainViewController: UIViewController {
 
         connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")    }
     
-
+    @IBAction func settingsButtonPressed() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "settings") as! SettingsViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
 }
 
