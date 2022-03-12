@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		973F649227D783E70045571F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F649127D783E70045571F /* AppDelegate.swift */; };
 		973F649427D783E70045571F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F649327D783E70045571F /* SceneDelegate.swift */; };
-		973F649627D783E70045571F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F649527D783E70045571F /* ViewController.swift */; };
+		973F649627D783E70045571F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F649527D783E70045571F /* MainViewController.swift */; };
 		973F649927D783E70045571F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973F649727D783E70045571F /* Main.storyboard */; };
 		973F649B27D783E80045571F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 973F649A27D783E80045571F /* Assets.xcassets */; };
 		973F649E27D783E80045571F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973F649C27D783E80045571F /* LaunchScreen.storyboard */; };
@@ -18,6 +18,7 @@
 		973F64B527D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64B427D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift */; };
 		973F64C527D784B60045571F /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64C427D784B60045571F /* ConnectionManager.swift */; };
 		973F64C727D7855A0045571F /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64C627D7855A0045571F /* HapticManager.swift */; };
+		9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1527DC240600C979B9 /* SetupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +42,7 @@
 		973F648E27D783E70045571F /* Smartpad-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smartpad-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		973F649127D783E70045571F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		973F649327D783E70045571F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		973F649527D783E70045571F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		973F649527D783E70045571F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		973F649827D783E70045571F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		973F649A27D783E80045571F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		973F649D27D783E80045571F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +54,7 @@
 		973F64B427D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smartpad_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		973F64C427D784B60045571F /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		973F64C627D7855A0045571F /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		9B035C1527DC240600C979B9 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +136,8 @@
 		973F64C127D784110045571F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				973F649527D783E70045571F /* ViewController.swift */,
+				9B035C1527DC240600C979B9 /* SetupViewController.swift */,
+				973F649527D783E70045571F /* MainViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -288,10 +291,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				973F649627D783E70045571F /* ViewController.swift in Sources */,
+				973F649627D783E70045571F /* MainViewController.swift in Sources */,
 				973F64C727D7855A0045571F /* HapticManager.swift in Sources */,
 				973F64C527D784B60045571F /* ConnectionManager.swift in Sources */,
 				973F649227D783E70045571F /* AppDelegate.swift in Sources */,
+				9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */,
 				973F649427D783E70045571F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

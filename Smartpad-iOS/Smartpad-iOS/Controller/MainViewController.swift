@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  test-ios-trackpad-concept
 //
 //  Created by alireza azimi on 2022-01-14.
@@ -11,7 +11,7 @@ import MultipeerConnectivity
 
 /* From https://www.raywenderlich.com/10608020-getting-started-with-core-haptics */
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     var connectionManager: ConnectionManager?
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
