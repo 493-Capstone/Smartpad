@@ -15,8 +15,12 @@ class MainViewController: UIViewController {
     var connectionManager: ConnectionManager?
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
-
+    var connStatus: ConnStatus = ConnStatus.Unpaired
     @IBOutlet var settingsButton: UIButton!
+
+    // TODO: REMOVE WHEN WIRELESS CONNECTION IS ADDED
+    @IBOutlet var pairedButton: UIButton!
+    @IBOutlet var unpairedButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +32,8 @@ class MainViewController: UIViewController {
         /* Setup the haptic engine */
         hapticManager = HapticManager()
 
-        /* TODO: Set the true connection status! */
         // Hint: We can use setNeedsDisplay() to redraw!
-        (self.view as! MainView).status = ConnStatus.PairedAndConnected
+        (self.view as! MainView).status = connStatus
     }
 
     func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
@@ -57,8 +60,22 @@ class MainViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
 
         /* TODO: Pass the true conn status */
-        vc.connStatus = ConnStatus.Unpaired
+        vc.connStatus = connStatus
         present(vc, animated: true)
+    }
+
+    // TODO: Remove once wireless connection is added
+    @IBAction func pairedButtonPressed() {
+        connStatus = ConnStatus.PairedAndConnected
+        (self.view as! MainView).status = connStatus
+        view.setNeedsDisplay()
+    }
+
+    // TODO: Remove once wireless connection is added
+    @IBAction func unpairedButtonPressed() {
+        connStatus = ConnStatus.Unpaired
+        (self.view as! MainView).status = connStatus
+        view.setNeedsDisplay()
     }
 }
 

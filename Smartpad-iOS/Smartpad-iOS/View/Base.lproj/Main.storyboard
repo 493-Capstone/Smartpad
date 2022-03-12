@@ -78,12 +78,32 @@
                                     <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="Vsr-7X-Zbr"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-dK-FV0">
+                                <rect key="frame" x="46" y="783" width="110" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Paired"/>
+                                <connections>
+                                    <action selector="pairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="tNZ-BM-M5m"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkO-4R-ifN">
+                                <rect key="frame" x="272" y="783" width="108" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Unpaired"/>
+                                <connections>
+                                    <action selector="unpairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="JcU-1X-JKS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YiP-mb-AD6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="pairedButton" destination="Si6-dK-FV0" id="g4V-vP-uOr"/>
                         <outlet property="settingsButton" destination="ioM-n6-mw4" id="weV-yD-flG"/>
+                        <outlet property="unpairedButton" destination="bkO-4R-ifN" id="JLb-ar-p1v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGH-zj-e4W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -103,7 +123,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Name:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUh-3b-9Q3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ChangeNameLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUh-3b-9Q3">
                                 <rect key="frame" x="24" y="409" width="367" height="144"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -117,6 +137,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="didFillText" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="PUl-ZB-Cpi"/>
+                                    <action selector="nameChanged" destination="SHJ-Ox-EXv" eventType="primaryActionTriggered" id="TWI-IF-Dz3"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0J-GB-gww">
@@ -129,17 +150,34 @@
                                     <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="nad-Ca-JXO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PairedInfoLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meQ-Pt-V7s">
+                                <rect key="frame" x="24" y="177" width="367" height="144"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whd-G7-s3K">
+                                <rect key="frame" x="157" y="281" width="100" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Unpair"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hNj-Ki-doU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="y0J-GB-gww" id="bC1-XJ-huN"/>
+                        <outlet property="changeNameField" destination="35k-w4-yUg" id="G8H-Ts-ATp"/>
+                        <outlet property="changeNameLabel" destination="JUh-3b-9Q3" id="x94-u2-4dy"/>
+                        <outlet property="pairedInfoLabel" destination="meQ-Pt-V7s" id="3Wd-qh-jFc"/>
+                        <outlet property="unpairButton" destination="whd-G7-s3K" id="Xnd-EX-Xtd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nga-VR-8Ym" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2429" y="46"/>
+            <point key="canvasLocation" x="2286" y="46"/>
         </scene>
     </scenes>
     <resources>
