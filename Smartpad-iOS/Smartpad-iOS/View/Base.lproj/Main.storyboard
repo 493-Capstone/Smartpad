@@ -97,7 +97,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
-                                <rect key="frame" x="153" y="268" width="110" height="51"/>
+                                <rect key="frame" x="152" y="268" width="110" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pair now"/>
@@ -105,13 +105,6 @@
                                     <action selector="pairButtonPressed" destination="K6j-gl-drQ" eventType="touchUpInside" id="6OU-tq-Ld3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
-                                <rect key="frame" x="20" y="196" width="362" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nim-5O-5jr">
                                 <rect key="frame" x="46" y="697" width="110" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -130,6 +123,17 @@
                                     <action selector="broadcastButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="Xxk-ir-UQa"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
+                                <rect key="frame" x="197" y="283" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
+                                <rect key="frame" x="26" y="196" width="362" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YiP-mb-AD6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -137,6 +141,7 @@
                     <connections>
                         <outlet property="broadcastButton" destination="pVO-GJ-dqb" id="W0m-BY-Xf1"/>
                         <outlet property="connInfoLabel" destination="muU-FI-9pD" id="4VN-f7-nBb"/>
+                        <outlet property="connSpinner" destination="bDn-wJ-NJH" id="qLT-8Z-5nh"/>
                         <outlet property="disconnectedButton" destination="Nim-5O-5jr" id="YOM-2j-0rV"/>
                         <outlet property="pairButton" destination="KDK-VQ-tMM" id="8xo-d1-bEC"/>
                         <outlet property="pairedButton" destination="Si6-dK-FV0" id="g4V-vP-uOr"/>

@@ -17,10 +17,14 @@ class MainViewController: UIViewController {
     var previousCoordinates: CGPoint = CGPoint.init()
     var connStatus: ConnStatus = ConnStatus.Unpaired
 
-    @IBOutlet var connInfoLabel: UILabel!
-    @IBOutlet var pairButton: UIButton!
-
     @IBOutlet var settingsButton: UIButton!
+
+    /* Connection status-dependent label */
+    @IBOutlet var connInfoLabel: UILabel!
+    /* "Pair now" button */
+    @IBOutlet var pairButton: UIButton!
+    /* Spinner shown when broadcasting or attempting to reconnect */
+    @IBOutlet var connSpinner: UIActivityIndicatorView!
 
     // TODO: REMOVE WHEN WIRELESS CONNECTION IS ADDED
     @IBOutlet var pairedButton: UIButton!
@@ -114,6 +118,8 @@ class MainViewController: UIViewController {
                 settingsButton.setTitle("Settings", for: .normal)
 
                 connInfoLabel.text = "Unpaired"
+                connSpinner.isHidden = true
+                connSpinner.stopAnimating()
                 pairButton.isHidden = false
 
             case ConnStatus.UnpairedAndBroadcasting:
@@ -121,18 +127,24 @@ class MainViewController: UIViewController {
                 settingsButton.setTitle("Cancel", for: .normal)
 
                 connInfoLabel.text = "Broadcasting..."
+                connSpinner.isHidden = false
+                connSpinner.startAnimating()
                 pairButton.isHidden = true
 
             case ConnStatus.PairedAndConnected:
                 settingsButton.setTitle("Settings", for: .normal)
 
                 connInfoLabel.text = "Swipe or tap to start"
+                connSpinner.isHidden = true
+                connSpinner.stopAnimating()
                 pairButton.isHidden = true
 
             case ConnStatus.PairedAndDisconnected:
                 settingsButton.setTitle("Settings", for: .normal)
 
-                connInfoLabel.text = "MacOS device not found, attempting to reconnect."
+                connInfoLabel.text = "MacOS device not found, attempting to reconnect..."
+                connSpinner.isHidden = false
+                connSpinner.startAnimating()
                 pairButton.isHidden = true
         }
 
