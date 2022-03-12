@@ -29,7 +29,6 @@ class MainViewController: UIViewController {
         hapticManager = HapticManager()
     }
 
-
     func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
         let translation: CGPoint = sender.translation(in: sender.view)
         var deltaTranslation = translation

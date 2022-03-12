@@ -20,6 +20,8 @@
 		973F64C727D7855A0045571F /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64C627D7855A0045571F /* HapticManager.swift */; };
 		9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1527DC240600C979B9 /* SetupViewController.swift */; };
 		9B035C1827DC37F700C979B9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1727DC37F700C979B9 /* SettingsViewController.swift */; };
+		9B035C1E27DC415E00C979B9 /* ConnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1D27DC415E00C979B9 /* ConnStatus.swift */; };
+		9B035C2227DC439D00C979B9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C2127DC439D00C979B9 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		973F64C627D7855A0045571F /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		9B035C1527DC240600C979B9 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		9B035C1727DC37F700C979B9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9B035C1D27DC415E00C979B9 /* ConnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnStatus.swift; sourceTree = "<group>"; };
+		9B035C2127DC439D00C979B9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,7 @@
 			children = (
 				973F649727D783E70045571F /* Main.storyboard */,
 				973F649C27D783E80045571F /* LaunchScreen.storyboard */,
+				9B035C2127DC439D00C979B9 /* MainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			children = (
 				973F64C427D784B60045571F /* ConnectionManager.swift */,
 				973F64C627D7855A0045571F /* HapticManager.swift */,
+				9B035C1D27DC415E00C979B9 /* ConnStatus.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -296,9 +302,11 @@
 			files = (
 				973F649627D783E70045571F /* MainViewController.swift in Sources */,
 				973F64C727D7855A0045571F /* HapticManager.swift in Sources */,
+				9B035C2227DC439D00C979B9 /* MainView.swift in Sources */,
 				9B035C1827DC37F700C979B9 /* SettingsViewController.swift in Sources */,
 				973F64C527D784B60045571F /* ConnectionManager.swift in Sources */,
 				973F649227D783E70045571F /* AppDelegate.swift in Sources */,
+				9B035C1E27DC415E00C979B9 /* ConnStatus.swift in Sources */,
 				9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */,
 				973F649427D783E70045571F /* SceneDelegate.swift in Sources */,
 			);
