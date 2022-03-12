@@ -16,11 +16,17 @@ class MainViewController: UIViewController {
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
     var connStatus: ConnStatus = ConnStatus.Unpaired
+
+    @IBOutlet var connInfoLabel: UILabel!
+    @IBOutlet var pairButton: UIButton!
+
     @IBOutlet var settingsButton: UIButton!
 
     // TODO: REMOVE WHEN WIRELESS CONNECTION IS ADDED
     @IBOutlet var pairedButton: UIButton!
     @IBOutlet var unpairedButton: UIButton!
+    @IBOutlet var disconnectedButton: UIButton!
+    @IBOutlet var broadcastButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +38,7 @@ class MainViewController: UIViewController {
         /* Setup the haptic engine */
         hapticManager = HapticManager()
 
-        // Hint: We can use setNeedsDisplay() to redraw!
-        (self.view as! MainView).status = connStatus
+        updateConnInfoUI()
     }
 
     func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
@@ -56,26 +61,84 @@ class MainViewController: UIViewController {
         connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")    }
     
     @IBAction func settingsButtonPressed() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "settings") as! SettingsViewController
-        vc.modalPresentationStyle = .fullScreen
+        if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
+            /* The settings button is actually a cancel button in this case*/
+            connStatus = ConnStatus.Unpaired
+            updateConnInfoUI()
+        }
+        else {
+            /* Show settings page */
+            let vc = storyboard?.instantiateViewController(withIdentifier: "settings") as! SettingsViewController
+            vc.modalPresentationStyle = .fullScreen
 
-        /* TODO: Pass the true conn status */
-        vc.connStatus = connStatus
-        present(vc, animated: true)
+            vc.connStatus = connStatus
+            present(vc, animated: true)
+        }
     }
 
     // TODO: Remove once wireless connection is added
     @IBAction func pairedButtonPressed() {
         connStatus = ConnStatus.PairedAndConnected
-        (self.view as! MainView).status = connStatus
-        view.setNeedsDisplay()
+        updateConnInfoUI()
     }
 
     // TODO: Remove once wireless connection is added
     @IBAction func unpairedButtonPressed() {
         connStatus = ConnStatus.Unpaired
+        updateConnInfoUI()
+    }
+
+    // TODO: Remove once wireless connection is added
+    @IBAction func disconnectedButtonPressed() {
+        connStatus = ConnStatus.PairedAndDisconnected
+        updateConnInfoUI()
+    }
+
+    // TODO: Remove once wireless connection is added
+    @IBAction func broadcastButtonPressed() {
+        connStatus = ConnStatus.UnpairedAndBroadcasting
+        updateConnInfoUI()
+    }
+
+    @IBAction func pairButtonPressed() {
+        connStatus = ConnStatus.UnpairedAndBroadcasting
+        updateConnInfoUI()
+    }
+
+    /**
+     * @brief Updates all of the UI that is related to the current connection status
+     */
+    func updateConnInfoUI() {
+        switch connStatus {
+            case ConnStatus.Unpaired:
+                settingsButton.setTitle("Settings", for: .normal)
+
+                connInfoLabel.text = "Unpaired"
+                pairButton.isHidden = false
+
+            case ConnStatus.UnpairedAndBroadcasting:
+                /* Use the settings button as a cancel button in this state */
+                settingsButton.setTitle("Cancel", for: .normal)
+
+                connInfoLabel.text = "Broadcasting..."
+                pairButton.isHidden = true
+
+            case ConnStatus.PairedAndConnected:
+                settingsButton.setTitle("Settings", for: .normal)
+
+                connInfoLabel.text = "Swipe or tap to start"
+                pairButton.isHidden = true
+
+            case ConnStatus.PairedAndDisconnected:
+                settingsButton.setTitle("Settings", for: .normal)
+
+                connInfoLabel.text = "MacOS device not found, attempting to reconnect."
+                pairButton.isHidden = true
+        }
+
+        /* Draw the connection status and the spinner */
         (self.view as! MainView).status = connStatus
-        view.setNeedsDisplay()
+        self.view.setNeedsDisplay()
     }
 }
 

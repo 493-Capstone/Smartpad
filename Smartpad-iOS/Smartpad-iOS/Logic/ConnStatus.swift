@@ -7,6 +7,7 @@
 
 public enum ConnStatus {
     case Unpaired
+    case UnpairedAndBroadcasting
     case PairedAndConnected
     case PairedAndDisconnected
 }

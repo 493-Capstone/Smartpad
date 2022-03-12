@@ -75,7 +75,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Settings"/>
                                 <connections>
-                                    <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="Vsr-7X-Zbr"/>
+                                    <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="jMG-U1-VGH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-dK-FV0">
@@ -84,7 +84,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Paired"/>
                                 <connections>
-                                    <action selector="pairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="tNZ-BM-M5m"/>
+                                    <action selector="pairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="OEh-Dc-9ig"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkO-4R-ifN">
@@ -93,7 +93,41 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Unpaired"/>
                                 <connections>
-                                    <action selector="unpairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="JcU-1X-JKS"/>
+                                    <action selector="unpairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="FN2-Fk-n3f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
+                                <rect key="frame" x="153" y="268" width="110" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Pair now"/>
+                                <connections>
+                                    <action selector="pairButtonPressed" destination="K6j-gl-drQ" eventType="touchUpInside" id="6OU-tq-Ld3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
+                                <rect key="frame" x="20" y="196" width="362" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nim-5O-5jr">
+                                <rect key="frame" x="46" y="697" width="110" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="DC'd "/>
+                                <connections>
+                                    <action selector="disconnectedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="cTo-cj-OhC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pVO-GJ-dqb">
+                                <rect key="frame" x="272" y="697" width="110" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Broadcast"/>
+                                <connections>
+                                    <action selector="broadcastButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="Xxk-ir-UQa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -101,6 +135,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="broadcastButton" destination="pVO-GJ-dqb" id="W0m-BY-Xf1"/>
+                        <outlet property="connInfoLabel" destination="muU-FI-9pD" id="4VN-f7-nBb"/>
+                        <outlet property="disconnectedButton" destination="Nim-5O-5jr" id="YOM-2j-0rV"/>
+                        <outlet property="pairButton" destination="KDK-VQ-tMM" id="8xo-d1-bEC"/>
                         <outlet property="pairedButton" destination="Si6-dK-FV0" id="g4V-vP-uOr"/>
                         <outlet property="settingsButton" destination="ioM-n6-mw4" id="weV-yD-flG"/>
                         <outlet property="unpairedButton" destination="bkO-4R-ifN" id="JLb-ar-p1v"/>
@@ -147,7 +185,6 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Back"/>
                                 <connections>
                                     <action selector="backButtonPressed" destination="SHJ-Ox-EXv" eventType="touchDown" id="TVr-t2-mHF"/>
-                                    <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="nad-Ca-JXO"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PairedInfoLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meQ-Pt-V7s">

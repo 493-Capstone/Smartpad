@@ -21,7 +21,7 @@ class MainView: UIView {
         var path = UIBezierPath()
         path = UIBezierPath(ovalIn: CGRect(x: 25, y: 50, width: 30, height: 30))
         switch status {
-            case ConnStatus.Unpaired:
+            case ConnStatus.Unpaired, ConnStatus.UnpairedAndBroadcasting:
                 UIColor.red.setStroke()
                 UIColor.red.setFill()
 
@@ -33,6 +33,8 @@ class MainView: UIView {
                 UIColor.green.setStroke()
                 UIColor.green.setFill()
         }
+
+        UIColor.black.setStroke()
 
         path.lineWidth = 5
         path.stroke()
