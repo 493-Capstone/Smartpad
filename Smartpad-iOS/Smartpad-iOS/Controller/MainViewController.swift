@@ -110,6 +110,36 @@ class MainViewController: UIViewController {
     }
 
     /**
+     * @brief Show the pairing confirmation prompt
+     */
+    func showPairConfirmation() {
+        // TODO: Replace XYZ with the other device's name
+        let foundAlert = UIAlertController(title: "Device found",
+                                           message: "XYZ is requesting to pair.",
+                                           preferredStyle: .alert)
+
+        /* Accept pairing */
+        foundAlert.addAction(UIAlertAction(title:
+                                            NSLocalizedString("Accept", comment: ""),
+                                           style: .default,
+                                           handler: { _ in
+            self.connStatus = ConnStatus.PairedAndConnected
+            self.updateConnInfoUI()
+        }))
+
+        /* Cancel pairing */
+        foundAlert.addAction(UIAlertAction(title:
+                                            NSLocalizedString("Cancel", comment: ""),
+                                           style: .default,
+                                           handler: { _ in
+            self.connStatus = ConnStatus.Unpaired
+            self.updateConnInfoUI()
+        }))
+
+        self.present(foundAlert, animated: true, completion: nil)
+    }
+
+    /**
      * @brief Updates all of the UI that is related to the current connection status
      */
     func updateConnInfoUI() {
@@ -130,6 +160,11 @@ class MainViewController: UIViewController {
                 connSpinner.isHidden = false
                 connSpinner.startAnimating()
                 pairButton.isHidden = true
+
+                // TODO: Temp timer for showing pair pop-up. Remove when wireless comms are added
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    self.showPairConfirmation()
+                }
 
             case ConnStatus.PairedAndConnected:
                 settingsButton.setTitle("Settings", for: .normal)
