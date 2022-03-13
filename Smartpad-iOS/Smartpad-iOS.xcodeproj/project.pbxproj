@@ -18,6 +18,8 @@
 		973F64B527D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64B427D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift */; };
 		973F64C527D784B60045571F /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64C427D784B60045571F /* ConnectionManager.swift */; };
 		973F64C727D7855A0045571F /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F64C627D7855A0045571F /* HapticManager.swift */; };
+		97DC462127DDD2ED00242B36 /* ConnectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC462027DDD2ED00242B36 /* ConnectionData.swift */; };
+		97DC462327DDD30700242B36 /* ConnectionDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC462227DDD30700242B36 /* ConnectionDataTest.swift */; };
 		9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1527DC240600C979B9 /* SetupViewController.swift */; };
 		9B035C1827DC37F700C979B9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1727DC37F700C979B9 /* SettingsViewController.swift */; };
 		9B035C1E27DC415E00C979B9 /* ConnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1D27DC415E00C979B9 /* ConnStatus.swift */; };
@@ -57,6 +59,8 @@
 		973F64B427D783E80045571F /* Smartpad_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smartpad_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		973F64C427D784B60045571F /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		973F64C627D7855A0045571F /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		97DC462027DDD2ED00242B36 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
+		97DC462227DDD30700242B36 /* ConnectionDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDataTest.swift; sourceTree = "<group>"; };
 		9B035C1527DC240600C979B9 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		9B035C1727DC37F700C979B9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9B035C1D27DC415E00C979B9 /* ConnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnStatus.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 		973F649027D783E70045571F /* Smartpad-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				97DC461F27DDD2D100242B36 /* Model */,
 				973F64C327D784520045571F /* Logic */,
 				973F64C227D7843B0045571F /* View */,
 				973F64C127D784110045571F /* Controller */,
@@ -126,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				973F64A827D783E80045571F /* Smartpad_iOSTests.swift */,
+				97DC462227DDD30700242B36 /* ConnectionDataTest.swift */,
 			);
 			path = "Smartpad-iOSTests";
 			sourceTree = "<group>";
@@ -167,6 +173,14 @@
 				9B035C1D27DC415E00C979B9 /* ConnStatus.swift */,
 			);
 			path = Logic;
+			sourceTree = "<group>";
+		};
+		97DC461F27DDD2D100242B36 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				97DC462027DDD2ED00242B36 /* ConnectionData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +323,7 @@
 				9B035C1E27DC415E00C979B9 /* ConnStatus.swift in Sources */,
 				9B035C1627DC240600C979B9 /* SetupViewController.swift in Sources */,
 				973F649427D783E70045571F /* SceneDelegate.swift in Sources */,
+				97DC462127DDD2ED00242B36 /* ConnectionData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				973F64A927D783E80045571F /* Smartpad_iOSTests.swift in Sources */,
+				97DC462327DDD30700242B36 /* ConnectionDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
