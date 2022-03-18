@@ -22,6 +22,8 @@
 		9B035C1827DC37F700C979B9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1727DC37F700C979B9 /* SettingsViewController.swift */; };
 		9B035C1E27DC415E00C979B9 /* ConnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C1D27DC415E00C979B9 /* ConnStatus.swift */; };
 		9B035C2227DC439D00C979B9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B035C2127DC439D00C979B9 /* MainView.swift */; };
+		9B211C2927E52B27004D5DBE /* GesturePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B211C2827E52B27004D5DBE /* GesturePacket.swift */; };
+		9B211C2B27E52B4D004D5DBE /* GestureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B211C2A27E52B4D004D5DBE /* GestureType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		9B035C1727DC37F700C979B9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9B035C1D27DC415E00C979B9 /* ConnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnStatus.swift; sourceTree = "<group>"; };
 		9B035C2127DC439D00C979B9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9B211C2827E52B27004D5DBE /* GesturePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePacket.swift; sourceTree = "<group>"; };
+		9B211C2A27E52B4D004D5DBE /* GestureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,8 @@
 				973F64C427D784B60045571F /* ConnectionManager.swift */,
 				973F64C627D7855A0045571F /* HapticManager.swift */,
 				9B035C1D27DC415E00C979B9 /* ConnStatus.swift */,
+				9B211C2827E52B27004D5DBE /* GesturePacket.swift */,
+				9B211C2A27E52B4D004D5DBE /* GestureType.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -303,6 +309,8 @@
 				973F649627D783E70045571F /* MainViewController.swift in Sources */,
 				973F64C727D7855A0045571F /* HapticManager.swift in Sources */,
 				9B035C2227DC439D00C979B9 /* MainView.swift in Sources */,
+				9B211C2B27E52B4D004D5DBE /* GestureType.swift in Sources */,
+				9B211C2927E52B27004D5DBE /* GesturePacket.swift in Sources */,
 				9B035C1827DC37F700C979B9 /* SettingsViewController.swift in Sources */,
 				973F64C527D784B60045571F /* ConnectionManager.swift in Sources */,
 				973F649227D783E70045571F /* AppDelegate.swift in Sources */,
