@@ -12,4 +12,6 @@
 
 public enum GestureType: Codable {
     case Pinch
+    case SingleTap
+    case DoubleTap
 }
