@@ -21,16 +21,22 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
         startP2PSession()
         
     }
-    func sendMotion(gesture: String) {
+    func sendMotion(gesture: GesturePacket) {
         guard !p2pSession.connectedPeers.isEmpty else {
             return
         }
         
-        
         DispatchQueue.main.async {
-            guard let command = gesture.data(using: String.Encoding.utf8) else {
+            let encoder = JSONEncoder()
+            guard let command = try? encoder.encode(gesture)
+            else {
+                print("[ConnectionManager] Failed to encode packet!")
                 return
             }
+
+//          UNCOMMENT TO SEE ENCODED PACKET AS STRING :-)
+//            print(String(data: command, encoding: String.Encoding.utf8))
+
             try? self.p2pSession.send(command, toPeers: self.p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
         }
     }

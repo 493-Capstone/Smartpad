@@ -44,25 +44,43 @@ class MainViewController: UIViewController {
 
         updateConnInfoUI()
     }
+//
+//    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
+//        let translation: CGPoint = sender.translation(in: sender.view)
+//        var deltaTranslation = translation
+//
+//        if sender.state != UIGestureRecognizer.State.began {
+//            deltaTranslation = CGPoint(x: translation.x - previousCoordinates.x, y: translation.y - previousCoordinates.y)
+//        }
+//        previousCoordinates = translation
+//        return deltaTranslation
+//    }
 
-    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
-        let translation: CGPoint = sender.translation(in: sender.view)
-        var deltaTranslation = translation
-        
-        if sender.state != UIGestureRecognizer.State.began {
-            deltaTranslation = CGPoint(x: translation.x - previousCoordinates.x, y: translation.y - previousCoordinates.y)
+    @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
+        if recognizer.state == .began || recognizer.state == .changed {
+            let encoder = JSONEncoder()
+            let payload = PinchPayload(xScale: Float(recognizer.scale), yScale: Float(recognizer.scale))
+            let encPayload = try? encoder.encode(payload)
+            let packet = GesturePacket(touchType: GestureType.Pinch, payload: encPayload)
+
+            print("Pinch - xScale: ", payload.xScale!, "yScale: ", payload.yScale!)
+
+            // Reset the scale so that we only get incremental changes
+            // in scale throughout a pinch event.
+            recognizer.scale = 1.0
+
+            connectionManager?.sendMotion(gesture: packet)
         }
-        previousCoordinates = translation
-        return deltaTranslation
     }
 
     
-    @IBAction func panMotionSimple(_ sender: UIPanGestureRecognizer) {
-        let deltaTranslation = getDeltaTranslation(sender: sender)
-        
-        hapticManager?.playSlice();
-
-        connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")    }
+//    @IBAction func panMotionSimple(_ sender: UIPanGestureRecognizer) {
+//        let deltaTranslation = getDeltaTranslation(sender: sender)
+//
+//        hapticManager?.playSlice();
+//
+//        connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")
+//    }
     
     @IBAction func settingsButtonPressed() {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
