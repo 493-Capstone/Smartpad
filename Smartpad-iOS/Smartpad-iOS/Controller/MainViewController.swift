@@ -56,6 +56,31 @@ class MainViewController: UIViewController {
 //        return deltaTranslation
 //    }
 
+    
+    @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
+//        hapticManager?.playTouchdown()
+        let encoder = JSONEncoder()
+        let payload = SingleTapPayload()
+        let encPayload = try? encoder.encode(payload)
+        let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
+        
+        print("SingleTap")
+        
+        connectionManager?.sendMotion(gesture: packet)
+    }
+    
+    @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
+//        hapticManager?.playTouchdown()
+        let encoder = JSONEncoder()
+        let payload = DoubleTapPayload()
+        let encPayload = try? encoder.encode(payload)
+        let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
+        
+        print("DoubleTap")
+        
+        connectionManager?.sendMotion(gesture: packet)
+    }
+    
     @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
         if recognizer.state == .began || recognizer.state == .changed {
             let encoder = JSONEncoder()
@@ -68,7 +93,6 @@ class MainViewController: UIViewController {
             // Reset the scale so that we only get incremental changes
             // in scale throughout a pinch event.
             recognizer.scale = 1.0
-
             connectionManager?.sendMotion(gesture: packet)
         }
     }
