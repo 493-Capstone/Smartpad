@@ -86,6 +86,7 @@ class MainViewController: UIViewController {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
             /* The settings button is actually a cancel button in this case*/
             connStatus = ConnStatus.Unpaired
+            connectionManager?.stopP2PBroadCast()
             updateConnInfoUI()
         }
         else {
@@ -120,11 +121,13 @@ class MainViewController: UIViewController {
     @IBAction func broadcastButtonPressed() {
         connStatus = ConnStatus.UnpairedAndBroadcasting
         updateConnInfoUI()
+        
     }
 
     @IBAction func pairButtonPressed() {
         connStatus = ConnStatus.UnpairedAndBroadcasting
         updateConnInfoUI()
+        connectionManager?.startP2PBroadcast()
     }
 
     /**

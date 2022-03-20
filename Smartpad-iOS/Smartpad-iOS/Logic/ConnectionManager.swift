@@ -17,9 +17,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
 
     
     override init(){
-        super.init()
-        startP2PSession()
-        
+        super.init()        
     }
     func sendMotion(gesture: GesturePacket) {
         guard !p2pSession.connectedPeers.isEmpty else {
@@ -41,13 +39,19 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
         }
     }
     
-    func startP2PSession(){
-        peerID = MCPeerID.init(displayName: UIDevice.current.name)
+    /**
+            This method starts broadcasting for peers
+     */
+    func startP2PBroadcast(){
+        peerID = MCPeerID.init(displayName: "alireza")
         p2pSession = MCSession.init(peer: peerID!)
         p2pSession.delegate = self
         p2pBrowser = MCNearbyServiceBrowser.init(peer: peerID, serviceType: "smartpad")
         p2pBrowser.delegate = self
         p2pBrowser.startBrowsingForPeers()
+    }
+    func stopP2PBroadCast(){
+        p2pBrowser.stopBrowsingForPeers()
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -55,7 +59,13 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        
+        let decoder = JSONDecoder()
+        guard let packet = try? decoder.decode(GesturePacket.self, from: data)
+        else {
+            print("[ConnectionManager] Failed to decode packet!")
+            return
+        }
+        print(packet)
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
