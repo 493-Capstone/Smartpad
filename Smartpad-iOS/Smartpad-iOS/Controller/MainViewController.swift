@@ -16,6 +16,8 @@ class MainViewController: UIViewController {
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
     var connStatus: ConnStatus = ConnStatus.Unpaired
+    /* For encoding packets */
+    let encoder = JSONEncoder()
 
     @IBOutlet var settingsButton: UIButton!
 
@@ -56,34 +58,58 @@ class MainViewController: UIViewController {
 //        return deltaTranslation
 //    }
 
-    
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
 //        hapticManager?.playTouchdown()
-        let encoder = JSONEncoder()
         let payload = SingleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
-        
+
         print("SingleTap")
-        
+
         connectionManager?.sendMotion(gesture: packet)
     }
-    
+
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
 //        hapticManager?.playTouchdown()
-        let encoder = JSONEncoder()
         let payload = DoubleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
-        
+
         print("DoubleTap")
-        
+
         connectionManager?.sendMotion(gesture: packet)
     }
-    
+
+    @IBAction func panRecognizer(_ recognizer: UIPanGestureRecognizer) {
+        // Get the translation
+        let translation = recognizer.translation(in: recognizer.view!)
+
+        var packet: GesturePacket!
+        let payload = PanPayload(xTranslation: Float(translation.x),
+                                 yTranslation: Float(translation.y))
+        let encPayload = try? encoder.encode(payload)
+
+        if (recognizer.state == .began) {
+            packet = GesturePacket(touchType: GestureType.PanStarted, payload: encPayload)
+        }
+        else if (recognizer.state == .changed) {
+            packet = GesturePacket(touchType: GestureType.PanChanged, payload: encPayload)
+        }
+        else if (recognizer.state == .ended) {
+            packet = GesturePacket(touchType: GestureType.PanEnded, payload: encPayload)
+        }
+        else {
+            /* An irrelevant case for our purposes */
+            return
+        }
+
+        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
+
+        connectionManager?.sendMotion(gesture: packet)
+    }
+
     @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
         if recognizer.state == .began || recognizer.state == .changed {
-            let encoder = JSONEncoder()
             let payload = PinchPayload(xScale: Float(recognizer.scale), yScale: Float(recognizer.scale))
             let encPayload = try? encoder.encode(payload)
             let packet = GesturePacket(touchType: GestureType.Pinch, payload: encPayload)
