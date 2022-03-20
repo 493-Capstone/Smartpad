@@ -43,7 +43,8 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
             This method starts broadcasting for peers
      */
     func startP2PBroadcast(){
-        peerID = MCPeerID.init(displayName: "alireza")
+        let connData = ConnectionData()
+        peerID = MCPeerID.init(displayName: connData.getDeviceName())
         p2pSession = MCSession.init(peer: peerID!)
         p2pSession.delegate = self
         p2pBrowser = MCNearbyServiceBrowser.init(peer: peerID, serviceType: "smartpad")
