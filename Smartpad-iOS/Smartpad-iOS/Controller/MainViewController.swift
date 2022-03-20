@@ -59,7 +59,7 @@ class MainViewController: UIViewController {
 //    }
 
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
-//        hapticManager?.playTouchdown()
+        hapticManager?.playTouchRelease()
         let payload = SingleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
@@ -67,10 +67,11 @@ class MainViewController: UIViewController {
         print("SingleTap")
 
         connectionManager?.sendMotion(gesture: packet)
+        
     }
 
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
-//        hapticManager?.playTouchdown()
+        hapticManager?.playTouchRelease()
         let payload = DoubleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
@@ -91,12 +92,14 @@ class MainViewController: UIViewController {
 
         if (recognizer.state == .began) {
             packet = GesturePacket(touchType: GestureType.PanStarted, payload: encPayload)
+            hapticManager?.playTouchDown()
         }
         else if (recognizer.state == .changed) {
             packet = GesturePacket(touchType: GestureType.PanChanged, payload: encPayload)
         }
         else if (recognizer.state == .ended) {
             packet = GesturePacket(touchType: GestureType.PanEnded, payload: encPayload)
+            hapticManager?.playTouchRelease()
         }
         else {
             /* An irrelevant case for our purposes */
