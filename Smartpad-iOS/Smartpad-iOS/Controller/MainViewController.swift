@@ -64,7 +64,7 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
 
-        print("SingleTap")
+//        print("SingleTap")
 
         connectionManager?.sendMotion(gesture: packet)
     }
@@ -75,12 +75,31 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
 
-        print("DoubleTap")
+//        print("DoubleTap")
 
         connectionManager?.sendMotion(gesture: packet)
     }
 
-    @IBAction func panRecognizer(_ recognizer: UIPanGestureRecognizer) {
+    @IBAction func singlePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
+        processPanEvent(recognizer: recognizer, panStarted: GestureType.SinglePanStarted,
+                        panChanged: GestureType.SinglePanChanged,
+                        panEnded: GestureType.SinglePanEnded)
+    }
+
+    @IBAction func doublePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
+        processPanEvent(recognizer: recognizer, panStarted: GestureType.DoublePanStarted,
+                        panChanged: GestureType.DoublePanChanged,
+                        panEnded: GestureType.DoublePanEnded)
+    }
+
+    /**
+     * @brief Build a pan packet based on the recognizer and send it to the connection manager
+     * @param[in] recognizer:     Gesture recognizer
+     * @param[in] panStarted:    Packet type to send when a "started" event is detected by the recognizer
+     * @param[in] panChanged: Packet type to send when a "changed" event is detected by the recognizer
+     * @param[in] panEnded:     Pakcet type to send when an "ended" event is detected by the recognizer
+     */
+    func processPanEvent(recognizer: UIPanGestureRecognizer, panStarted: GestureType, panChanged: GestureType, panEnded: GestureType) {
         // Get the translation
         let translation = recognizer.translation(in: recognizer.view!)
 
@@ -90,20 +109,20 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
 
         if (recognizer.state == .began) {
-            packet = GesturePacket(touchType: GestureType.PanStarted, payload: encPayload)
+            packet = GesturePacket(touchType: panStarted, payload: encPayload)
         }
         else if (recognizer.state == .changed) {
-            packet = GesturePacket(touchType: GestureType.PanChanged, payload: encPayload)
+            packet = GesturePacket(touchType: panChanged, payload: encPayload)
         }
         else if (recognizer.state == .ended) {
-            packet = GesturePacket(touchType: GestureType.PanEnded, payload: encPayload)
+            packet = GesturePacket(touchType: panEnded, payload: encPayload)
         }
         else {
             /* An irrelevant case for our purposes */
             return
         }
 
-        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
+//        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
 
         connectionManager?.sendMotion(gesture: packet)
     }
@@ -114,7 +133,7 @@ class MainViewController: UIViewController {
             let encPayload = try? encoder.encode(payload)
             let packet = GesturePacket(touchType: GestureType.Pinch, payload: encPayload)
 
-            print("Pinch - xScale: ", payload.xScale!, "yScale: ", payload.yScale!)
+//            print("Pinch - xScale: ", payload.xScale!, "yScale: ", payload.yScale!)
 
             // Reset the scale so that we only get incremental changes
             // in scale throughout a pinch event.
