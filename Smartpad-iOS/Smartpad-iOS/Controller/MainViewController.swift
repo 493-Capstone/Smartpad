@@ -46,17 +46,6 @@ class MainViewController: UIViewController {
 
         updateConnInfoUI()
     }
-//
-//    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
-//        let translation: CGPoint = sender.translation(in: sender.view)
-//        var deltaTranslation = translation
-//
-//        if sender.state != UIGestureRecognizer.State.began {
-//            deltaTranslation = CGPoint(x: translation.x - previousCoordinates.x, y: translation.y - previousCoordinates.y)
-//        }
-//        previousCoordinates = translation
-//        return deltaTranslation
-//    }
 
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
 //        hapticManager?.playTouchdown()
@@ -132,15 +121,6 @@ class MainViewController: UIViewController {
         recognizer.scale = 1.0
         connectionManager?.sendMotion(gesture: packet)
     }
-
-    
-//    @IBAction func panMotionSimple(_ sender: UIPanGestureRecognizer) {
-//        let deltaTranslation = getDeltaTranslation(sender: sender)
-//
-//        hapticManager?.playSlice();
-//
-//        connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")
-//    }
     
     @IBAction func settingsButtonPressed() {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
