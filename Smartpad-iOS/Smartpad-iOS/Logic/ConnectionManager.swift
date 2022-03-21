@@ -8,20 +8,25 @@
 import Foundation
 import MultipeerConnectivity
 
-class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate{
+class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate{
+
+    
     var peerID: MCPeerID!
-    var p2pSession: MCSession!
+    var p2pSession: MCSession?
     var p2pBrowser: MCNearbyServiceBrowser!
     var previousCoordinates: CGPoint = CGPoint.init()
+    var advertiser: MCNearbyServiceAdvertiser?
     var peerName: String = ""
+    var mainVC: MainViewController!
 
     
     override init(){
         super.init()
-        startP2PSession()
         
+        startP2PSession()
     }
     func sendMotion(gesture: GesturePacket) {
+        guard let p2pSession = p2pSession else {return}
         guard !p2pSession.connectedPeers.isEmpty else {
             return
         }
@@ -36,49 +41,84 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceBrowserDeleg
 
 //          UNCOMMENT TO SEE ENCODED PACKET AS STRING :-)
 //            print(String(data: command, encoding: String.Encoding.utf8))
-
-            try? self.p2pSession.send(command, toPeers: self.p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
+            guard let p2pSession = self.p2pSession else {return}
+            try? p2pSession.send(command, toPeers: p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
         }
     }
     
+    /**
+            This method starts broadcasting for peers
+     */
     func startP2PSession(){
-        peerID = MCPeerID.init(displayName: UIDevice.current.name)
-        p2pSession = MCSession.init(peer: peerID!)
-        p2pSession.delegate = self
-        p2pBrowser = MCNearbyServiceBrowser.init(peer: peerID, serviceType: "smartpad")
-        p2pBrowser.delegate = self
-        p2pBrowser.startBrowsingForPeers()
+        let connData = ConnectionData()
+        peerID = MCPeerID.init(displayName: connData.getDeviceName())
+        p2pSession = MCSession.init(peer: peerID!, securityIdentity: nil, encryptionPreference: .required)
+        p2pSession?.delegate = self
+
+    }
+    
+    
+    func startHosting(){
+        
+        advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "smartpad")
+        advertiser?.delegate = self
+        advertiser?.startAdvertisingPeer()
+    }
+
+}
+
+extension ConnectionManager{
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        
+    }
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-       
+        switch state {
+            case .connected:
+                print("Connected: \(peerID.displayName)")
+                mainVC.connStatus = ConnStatus.PairedAndConnected
+                DispatchQueue.main.async {
+                    self.mainVC.updateConnInfoUI()
+                    
+                }
+                
+            case .connecting:
+                print("Connecting: \(peerID.displayName)")
+            case .notConnected:
+                print("notConnected: \(peerID.displayName)")
+                mainVC.connStatus = ConnStatus.Unpaired
+                advertiser?.stopAdvertisingPeer()
+                DispatchQueue.main.async {
+                    self.mainVC.updateConnInfoUI()
+                    
+                }
+        @unknown default:
+            print("unknown state")
+            
+        }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         
     }
-    
-    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-  
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        // creates dialog box to accept or reject the connection request
+        let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName)' wants to connect", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Accept", style: .default, handler: { [weak self] _ in
+            invitationHandler(true, self?.p2pSession)
+        }))
+        ac.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: { _ in
+            invitationHandler(false, nil)
+        }))
+        mainVC.present(ac, animated: true)
     }
-    
-    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
-      
-    }
-    
-    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
-        peerName = ""
-    
-    }
-    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        p2pBrowser.invitePeer(peerID, to: p2pSession, withContext: nil, timeout: TimeInterval(10))
-        peerName = peerID.displayName
-    }
-    
-    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-    }
-    
-
-    
     
 }

@@ -28,11 +28,6 @@ class MainViewController: UIViewController {
     /* Spinner shown when broadcasting or attempting to reconnect */
     @IBOutlet var connSpinner: UIActivityIndicatorView!
 
-    // TODO: REMOVE WHEN WIRELESS CONNECTION IS ADDED
-    @IBOutlet var pairedButton: UIButton!
-    @IBOutlet var unpairedButton: UIButton!
-    @IBOutlet var disconnectedButton: UIButton!
-    @IBOutlet var broadcastButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +35,15 @@ class MainViewController: UIViewController {
 
         /* Setup the connection manager */
         connectionManager = ConnectionManager()
+        connectionManager?.mainVC = self
         
         /* Setup the haptic engine */
         hapticManager = HapticManager()
 
         updateConnInfoUI()
     }
+    
+
 //
 //    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
 //        let translation: CGPoint = sender.translation(in: sender.view)
@@ -148,65 +146,16 @@ class MainViewController: UIViewController {
         }
     }
 
-    // TODO: Remove once wireless connection is added
-    @IBAction func pairedButtonPressed() {
-        connStatus = ConnStatus.PairedAndConnected
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func unpairedButtonPressed() {
-        connStatus = ConnStatus.Unpaired
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func disconnectedButtonPressed() {
-        connStatus = ConnStatus.PairedAndDisconnected
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func broadcastButtonPressed() {
-        connStatus = ConnStatus.UnpairedAndBroadcasting
-        updateConnInfoUI()
-    }
 
     @IBAction func pairButtonPressed() {
         connStatus = ConnStatus.UnpairedAndBroadcasting
         updateConnInfoUI()
+        guard let connectionManager = connectionManager else { return }
+        connectionManager.startHosting()
     }
 
-    /**
-     * @brief Show the pairing confirmation prompt
-     */
-    func showPairConfirmation() {
-        // TODO: Replace XYZ with the other device's name
-        let foundAlert = UIAlertController(title: "Device found",
-                                           message: "XYZ is requesting to pair.",
-                                           preferredStyle: .alert)
 
-        /* Accept pairing */
-        foundAlert.addAction(UIAlertAction(title:
-                                            NSLocalizedString("Accept", comment: ""),
-                                           style: .default,
-                                           handler: { _ in
-            self.connStatus = ConnStatus.PairedAndConnected
-            self.updateConnInfoUI()
-        }))
-
-        /* Cancel pairing */
-        foundAlert.addAction(UIAlertAction(title:
-                                            NSLocalizedString("Cancel", comment: ""),
-                                           style: .default,
-                                           handler: { _ in
-            self.connStatus = ConnStatus.Unpaired
-            self.updateConnInfoUI()
-        }))
-
-        self.present(foundAlert, animated: true, completion: nil)
-    }
-
+    
     /**
      * @brief Updates all of the UI that is related to the current connection status
      */
@@ -228,11 +177,6 @@ class MainViewController: UIViewController {
                 connSpinner.isHidden = false
                 connSpinner.startAnimating()
                 pairButton.isHidden = true
-
-                // TODO: Temp timer for showing pair pop-up. Remove when wireless comms are added
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.showPairConfirmation()
-                }
 
             case ConnStatus.PairedAndConnected:
                 settingsButton.setTitle("Settings", for: .normal)

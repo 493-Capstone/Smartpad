@@ -10,22 +10,39 @@ enum StorageError: Error {
     case ValueNotFoundError
 }
 struct ConnectionKeys {
-    static let deviceUUID = ""
+    static let connDeviceUUID = ""
+    static let currDeviceName = ""
 }
 
 class ConnectionData {
     let defaults = UserDefaults.standard
     
     func setSelectedDeviceUUID(uuid: String){
-        defaults.set(uuid, forKey: ConnectionKeys.deviceUUID)
+        defaults.set(uuid, forKey: ConnectionKeys.connDeviceUUID)
+        defaults.synchronize()
     }
     
-    func getSelectedDeviceUUID() throws -> String {
-        if let deviceUUID = defaults.string(forKey: ConnectionKeys.deviceUUID) {
+    func getSelectedDeviceUUID() -> String {
+        if let deviceUUID = defaults.string(forKey: ConnectionKeys.connDeviceUUID) {
            return deviceUUID
         } else {
-            throw StorageError.ValueNotFoundError
+            return ""
         }
         
     }
+    
+    func getDeviceName() -> String{
+        if let deviceName = defaults.string(forKey: ConnectionKeys.currDeviceName) {
+           return deviceName
+        } else {
+   
+           return ""
+        }
+    }
+    
+    func setDeviceName(name: String){
+        defaults.set(name, forKey: ConnectionKeys.currDeviceName)
+        defaults.synchronize()
+    }
+
 }
