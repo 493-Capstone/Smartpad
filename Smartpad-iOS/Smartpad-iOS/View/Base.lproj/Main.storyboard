@@ -103,6 +103,9 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Py8-e4-HSg" appends="YES" id="unz-pt-f0m"/>
+                            <outletCollection property="gestureRecognizers" destination="Zp2-f6-Ep8" appends="YES" id="bSf-AL-wt9"/>
+                            <outletCollection property="gestureRecognizers" destination="5E8-qQ-Jdj" appends="YES" id="MzJ-3p-dpd"/>
+                            <outletCollection property="gestureRecognizers" destination="aTU-gd-pTl" appends="YES" id="EfQ-jX-wzm"/>
                         </connections>
                     </view>
                     <connections>
@@ -118,6 +121,21 @@
                         <action selector="pinchRecognizer:" destination="K6j-gl-drQ" id="tG8-Ya-GO2"/>
                     </connections>
                 </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Zp2-f6-Ep8">
+                    <connections>
+                        <action selector="panRecognizer:" destination="K6j-gl-drQ" id="gV2-6Y-Ens"/>
+                    </connections>
+                </panGestureRecognizer>
+                <tapGestureRecognizer id="5E8-qQ-Jdj">
+                    <connections>
+                        <action selector="singleTapRecognizer:" destination="K6j-gl-drQ" id="ifu-RK-P18"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer numberOfTouchesRequired="2" id="aTU-gd-pTl">
+                    <connections>
+                        <action selector="doubleTapRecognizer:" destination="K6j-gl-drQ" id="3js-kq-LEN"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1292.753623188406" y="45.535714285714285"/>
         </scene>
