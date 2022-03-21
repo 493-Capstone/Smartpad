@@ -14,12 +14,23 @@ class SetupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        let connData = ConnectionData()
+        if connData.getDeviceName() != "" {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "main") as! MainViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+        }
+        
+    }
     
     @IBAction func didFillText() {
         if let unwrapped = idField.text {
             /* TODO: We should save the identifier somewhere rather than just printing it */
             print(unwrapped)
-
+            var connData = ConnectionData()
+            // set device name
+            connData.setDeviceName(name: unwrapped)
             let vc = storyboard?.instantiateViewController(withIdentifier: "main") as! MainViewController
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
