@@ -76,24 +76,6 @@
                                     <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="jMG-U1-VGH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-dK-FV0">
-                                <rect key="frame" x="46" y="783" width="110" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Paired"/>
-                                <connections>
-                                    <action selector="pairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="OEh-Dc-9ig"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkO-4R-ifN">
-                                <rect key="frame" x="272" y="783" width="108" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Unpaired"/>
-                                <connections>
-                                    <action selector="unpairedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="FN2-Fk-n3f"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
                                 <rect key="frame" x="152" y="268" width="110" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -101,24 +83,6 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Pair now"/>
                                 <connections>
                                     <action selector="pairButtonPressed" destination="K6j-gl-drQ" eventType="touchUpInside" id="6OU-tq-Ld3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nim-5O-5jr">
-                                <rect key="frame" x="46" y="697" width="110" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="DC'd "/>
-                                <connections>
-                                    <action selector="disconnectedButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="cTo-cj-OhC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pVO-GJ-dqb">
-                                <rect key="frame" x="272" y="697" width="110" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Broadcast"/>
-                                <connections>
-                                    <action selector="broadcastButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="Xxk-ir-UQa"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
@@ -142,14 +106,10 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="broadcastButton" destination="pVO-GJ-dqb" id="W0m-BY-Xf1"/>
                         <outlet property="connInfoLabel" destination="muU-FI-9pD" id="4VN-f7-nBb"/>
                         <outlet property="connSpinner" destination="bDn-wJ-NJH" id="qLT-8Z-5nh"/>
-                        <outlet property="disconnectedButton" destination="Nim-5O-5jr" id="YOM-2j-0rV"/>
                         <outlet property="pairButton" destination="KDK-VQ-tMM" id="8xo-d1-bEC"/>
-                        <outlet property="pairedButton" destination="Si6-dK-FV0" id="g4V-vP-uOr"/>
                         <outlet property="settingsButton" destination="ioM-n6-mw4" id="weV-yD-flG"/>
-                        <outlet property="unpairedButton" destination="bkO-4R-ifN" id="JLb-ar-p1v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGH-zj-e4W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
