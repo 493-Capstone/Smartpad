@@ -106,6 +106,7 @@
                             <outletCollection property="gestureRecognizers" destination="Zp2-f6-Ep8" appends="YES" id="bSf-AL-wt9"/>
                             <outletCollection property="gestureRecognizers" destination="5E8-qQ-Jdj" appends="YES" id="MzJ-3p-dpd"/>
                             <outletCollection property="gestureRecognizers" destination="aTU-gd-pTl" appends="YES" id="EfQ-jX-wzm"/>
+                            <outletCollection property="gestureRecognizers" destination="fBV-9l-3jc" appends="YES" id="tFi-KO-ImR"/>
                         </connections>
                     </view>
                     <connections>
@@ -121,21 +122,26 @@
                         <action selector="pinchRecognizer:" destination="K6j-gl-drQ" id="tG8-Ya-GO2"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Zp2-f6-Ep8">
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="Zp2-f6-Ep8" userLabel="Single Pan Gesture Recognizer">
                     <connections>
-                        <action selector="panRecognizer:" destination="K6j-gl-drQ" id="gV2-6Y-Ens"/>
+                        <action selector="singlePanRecognizer:" destination="K6j-gl-drQ" id="qmJ-WB-nss"/>
                     </connections>
                 </panGestureRecognizer>
-                <tapGestureRecognizer id="5E8-qQ-Jdj">
+                <tapGestureRecognizer id="5E8-qQ-Jdj" userLabel="Single Tap Gesture Recognizer">
                     <connections>
                         <action selector="singleTapRecognizer:" destination="K6j-gl-drQ" id="ifu-RK-P18"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTouchesRequired="2" id="aTU-gd-pTl">
+                <tapGestureRecognizer numberOfTouchesRequired="2" id="aTU-gd-pTl" userLabel="Double Tap Gesture Recognizer">
                     <connections>
                         <action selector="doubleTapRecognizer:" destination="K6j-gl-drQ" id="3js-kq-LEN"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="2" maximumNumberOfTouches="2" id="fBV-9l-3jc" userLabel="Double Pan Gesture Recognizer">
+                    <connections>
+                        <action selector="doublePanRecognizer:" destination="K6j-gl-drQ" id="ZRF-M4-H1K"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1292.753623188406" y="45.535714285714285"/>
         </scene>
