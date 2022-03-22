@@ -4,7 +4,6 @@
 //
 //  Created by Alireza Azimi on 2022-03-08.
 //
-
 import Foundation
 import CoreHaptics
 /* TODO: LATER IMPLEMENT THIS OURSELVES THIS IS JUST COPY-PASTED CODE */
@@ -47,7 +46,7 @@ extension HapticManager {
 
     return try CHHapticPattern(events: [slice, snip], parameters: [])
     }
-    
+
     func playSlice() {
       do {
         let pattern = try slicePattern()
