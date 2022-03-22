@@ -120,5 +120,4 @@ extension ConnectionManager{
         }))
         mainVC.present(ac, animated: true)
     }
-    
 }

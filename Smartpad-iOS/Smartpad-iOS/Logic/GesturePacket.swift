@@ -13,8 +13,7 @@ struct GesturePacket: Codable {
 }
 
 struct PinchPayload: Codable {
-    var xScale: Float!
-    var yScale: Float!
+    var scale: Float!
 }
 
 struct PanPayload: Codable {

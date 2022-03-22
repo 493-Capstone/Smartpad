@@ -42,19 +42,6 @@ class MainViewController: UIViewController {
 
         updateConnInfoUI()
     }
-    
-
-//
-//    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
-//        let translation: CGPoint = sender.translation(in: sender.view)
-//        var deltaTranslation = translation
-//
-//        if sender.state != UIGestureRecognizer.State.began {
-//            deltaTranslation = CGPoint(x: translation.x - previousCoordinates.x, y: translation.y - previousCoordinates.y)
-//        }
-//        previousCoordinates = translation
-//        return deltaTranslation
-//    }
 
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
 //        hapticManager?.playTouchdown()
@@ -126,28 +113,29 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
-        if recognizer.state == .began || recognizer.state == .changed {
-            let payload = PinchPayload(xScale: Float(recognizer.scale), yScale: Float(recognizer.scale))
-            let encPayload = try? encoder.encode(payload)
-            let packet = GesturePacket(touchType: GestureType.Pinch, payload: encPayload)
+        var packet: GesturePacket!
+        let payload = PinchPayload(scale: Float(recognizer.scale))
+        let encPayload = try? encoder.encode(payload)
 
-//            print("Pinch - xScale: ", payload.xScale!, "yScale: ", payload.yScale!)
-
-            // Reset the scale so that we only get incremental changes
-            // in scale throughout a pinch event.
-            recognizer.scale = 1.0
-            connectionManager?.sendMotion(gesture: packet)
+        if (recognizer.state == .began) {
+            packet = GesturePacket(touchType: GestureType.PinchStarted, payload: encPayload)
         }
-    }
+        else if (recognizer.state == .changed) {
+            packet = GesturePacket(touchType: GestureType.PinchChanged, payload: encPayload)
+        }
+        else if (recognizer.state == .ended) {
+            packet = GesturePacket(touchType: GestureType.PinchEnded, payload: encPayload)
+        }
+        else {
+            /* An irrelevant case for our purposes */
+            return
+        }
 
-    
-//    @IBAction func panMotionSimple(_ sender: UIPanGestureRecognizer) {
-//        let deltaTranslation = getDeltaTranslation(sender: sender)
-//
-//        hapticManager?.playSlice();
-//
-//        connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")
-//    }
+        // Reset the scale so that we only get incremental changes
+        // in scale throughout a pinch event.
+        recognizer.scale = 1.0
+        connectionManager?.sendMotion(gesture: packet)
+    }
     
     @IBAction func settingsButtonPressed() {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
