@@ -28,11 +28,6 @@ class MainViewController: UIViewController {
     /* Spinner shown when broadcasting or attempting to reconnect */
     @IBOutlet var connSpinner: UIActivityIndicatorView!
 
-    // TODO: REMOVE WHEN WIRELESS CONNECTION IS ADDED
-    @IBOutlet var pairedButton: UIButton!
-    @IBOutlet var unpairedButton: UIButton!
-    @IBOutlet var disconnectedButton: UIButton!
-    @IBOutlet var broadcastButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,23 +35,13 @@ class MainViewController: UIViewController {
 
         /* Setup the connection manager */
         connectionManager = ConnectionManager()
+        connectionManager?.mainVC = self
         
         /* Setup the haptic engine */
         hapticManager = HapticManager()
 
         updateConnInfoUI()
     }
-//
-//    func getDeltaTranslation(sender: UIPanGestureRecognizer) -> CGPoint {
-//        let translation: CGPoint = sender.translation(in: sender.view)
-//        var deltaTranslation = translation
-//
-//        if sender.state != UIGestureRecognizer.State.began {
-//            deltaTranslation = CGPoint(x: translation.x - previousCoordinates.x, y: translation.y - previousCoordinates.y)
-//        }
-//        previousCoordinates = translation
-//        return deltaTranslation
-//    }
 
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
         hapticManager?.playTouchRelease()
@@ -64,7 +49,7 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
 
-        print("SingleTap")
+//        print("SingleTap")
 
         connectionManager?.sendMotion(gesture: packet)
         
@@ -76,12 +61,31 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
 
-        print("DoubleTap")
+//        print("DoubleTap")
 
         connectionManager?.sendMotion(gesture: packet)
     }
 
-    @IBAction func panRecognizer(_ recognizer: UIPanGestureRecognizer) {
+    @IBAction func singlePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
+        processPanEvent(recognizer: recognizer, panStarted: GestureType.SinglePanStarted,
+                        panChanged: GestureType.SinglePanChanged,
+                        panEnded: GestureType.SinglePanEnded)
+    }
+
+    @IBAction func doublePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
+        processPanEvent(recognizer: recognizer, panStarted: GestureType.DoublePanStarted,
+                        panChanged: GestureType.DoublePanChanged,
+                        panEnded: GestureType.DoublePanEnded)
+    }
+
+    /**
+     * @brief Build a pan packet based on the recognizer and send it to the connection manager
+     * @param[in] recognizer:     Gesture recognizer
+     * @param[in] panStarted:    Packet type to send when a "started" event is detected by the recognizer
+     * @param[in] panChanged: Packet type to send when a "changed" event is detected by the recognizer
+     * @param[in] panEnded:     Pakcet type to send when an "ended" event is detected by the recognizer
+     */
+    func processPanEvent(recognizer: UIPanGestureRecognizer, panStarted: GestureType, panChanged: GestureType, panEnded: GestureType) {
         // Get the translation
         let translation = recognizer.translation(in: recognizer.view!)
 
@@ -91,49 +95,50 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
 
         if (recognizer.state == .began) {
-            packet = GesturePacket(touchType: GestureType.PanStarted, payload: encPayload)
             hapticManager?.playTouchDown()
+            packet = GesturePacket(touchType: panStarted, payload: encPayload)
         }
         else if (recognizer.state == .changed) {
-            packet = GesturePacket(touchType: GestureType.PanChanged, payload: encPayload)
+            packet = GesturePacket(touchType: panChanged, payload: encPayload)
         }
         else if (recognizer.state == .ended) {
-            packet = GesturePacket(touchType: GestureType.PanEnded, payload: encPayload)
             hapticManager?.playTouchRelease()
+            packet = GesturePacket(touchType: panEnded, payload: encPayload)
         }
         else {
             /* An irrelevant case for our purposes */
             return
         }
 
-        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
+//        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
 
         connectionManager?.sendMotion(gesture: packet)
     }
 
     @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
-        if recognizer.state == .began || recognizer.state == .changed {
-            let payload = PinchPayload(xScale: Float(recognizer.scale), yScale: Float(recognizer.scale))
-            let encPayload = try? encoder.encode(payload)
-            let packet = GesturePacket(touchType: GestureType.Pinch, payload: encPayload)
+        var packet: GesturePacket!
+        let payload = PinchPayload(scale: Float(recognizer.scale))
+        let encPayload = try? encoder.encode(payload)
 
-            print("Pinch - xScale: ", payload.xScale!, "yScale: ", payload.yScale!)
-
-            // Reset the scale so that we only get incremental changes
-            // in scale throughout a pinch event.
-            recognizer.scale = 1.0
-            connectionManager?.sendMotion(gesture: packet)
+        if (recognizer.state == .began) {
+            packet = GesturePacket(touchType: GestureType.PinchStarted, payload: encPayload)
         }
-    }
+        else if (recognizer.state == .changed) {
+            packet = GesturePacket(touchType: GestureType.PinchChanged, payload: encPayload)
+        }
+        else if (recognizer.state == .ended) {
+            packet = GesturePacket(touchType: GestureType.PinchEnded, payload: encPayload)
+        }
+        else {
+            /* An irrelevant case for our purposes */
+            return
+        }
 
-    
-//    @IBAction func panMotionSimple(_ sender: UIPanGestureRecognizer) {
-//        let deltaTranslation = getDeltaTranslation(sender: sender)
-//
-//        hapticManager?.playSlice();
-//
-//        connectionManager?.sendMotion(gesture: "\(deltaTranslation.x) \(deltaTranslation.y)")
-//    }
+        // Reset the scale so that we only get incremental changes
+        // in scale throughout a pinch event.
+        recognizer.scale = 1.0
+        connectionManager?.sendMotion(gesture: packet)
+    }
     
     @IBAction func settingsButtonPressed() {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
@@ -151,65 +156,16 @@ class MainViewController: UIViewController {
         }
     }
 
-    // TODO: Remove once wireless connection is added
-    @IBAction func pairedButtonPressed() {
-        connStatus = ConnStatus.PairedAndConnected
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func unpairedButtonPressed() {
-        connStatus = ConnStatus.Unpaired
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func disconnectedButtonPressed() {
-        connStatus = ConnStatus.PairedAndDisconnected
-        updateConnInfoUI()
-    }
-
-    // TODO: Remove once wireless connection is added
-    @IBAction func broadcastButtonPressed() {
-        connStatus = ConnStatus.UnpairedAndBroadcasting
-        updateConnInfoUI()
-    }
 
     @IBAction func pairButtonPressed() {
         connStatus = ConnStatus.UnpairedAndBroadcasting
         updateConnInfoUI()
+        guard let connectionManager = connectionManager else { return }
+        connectionManager.startHosting()
     }
 
-    /**
-     * @brief Show the pairing confirmation prompt
-     */
-    func showPairConfirmation() {
-        // TODO: Replace XYZ with the other device's name
-        let foundAlert = UIAlertController(title: "Device found",
-                                           message: "XYZ is requesting to pair.",
-                                           preferredStyle: .alert)
 
-        /* Accept pairing */
-        foundAlert.addAction(UIAlertAction(title:
-                                            NSLocalizedString("Accept", comment: ""),
-                                           style: .default,
-                                           handler: { _ in
-            self.connStatus = ConnStatus.PairedAndConnected
-            self.updateConnInfoUI()
-        }))
-
-        /* Cancel pairing */
-        foundAlert.addAction(UIAlertAction(title:
-                                            NSLocalizedString("Cancel", comment: ""),
-                                           style: .default,
-                                           handler: { _ in
-            self.connStatus = ConnStatus.Unpaired
-            self.updateConnInfoUI()
-        }))
-
-        self.present(foundAlert, animated: true, completion: nil)
-    }
-
+    
     /**
      * @brief Updates all of the UI that is related to the current connection status
      */
@@ -231,11 +187,6 @@ class MainViewController: UIViewController {
                 connSpinner.isHidden = false
                 connSpinner.startAnimating()
                 pairButton.isHidden = true
-
-                // TODO: Temp timer for showing pair pop-up. Remove when wireless comms are added
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.showPairConfirmation()
-                }
 
             case ConnStatus.PairedAndConnected:
                 settingsButton.setTitle("Settings", for: .normal)
