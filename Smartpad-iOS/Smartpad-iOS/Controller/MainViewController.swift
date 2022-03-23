@@ -137,6 +137,33 @@ class MainViewController: UIViewController {
         recognizer.scale = 1.0
         connectionManager?.sendMotion(gesture: packet)
     }
+
+    @IBAction func dragPanRecognizer(_ recognizer: UIDragPanGestureRecognizer) {
+        // Get the translation
+
+        var packet: GesturePacket!
+        let payload = PanPayload(xTranslation: Float(recognizer.translation.x),
+                                 yTranslation: Float(recognizer.translation.y))
+        let encPayload = try? encoder.encode(payload)
+
+        if (recognizer.state == .began) {
+            packet = GesturePacket(touchType: .DragPanStarted, payload: encPayload)
+        }
+        else if (recognizer.state == .changed) {
+            packet = GesturePacket(touchType: .DragPanChanged, payload: encPayload)
+        }
+        else if (recognizer.state == .ended) {
+            packet = GesturePacket(touchType: .DragPanEnded, payload: encPayload)
+        }
+        else {
+            /* An irrelevant case for our purposes */
+            return
+        }
+
+//        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
+
+        connectionManager?.sendMotion(gesture: packet)
+    }
     
     @IBAction func settingsButtonPressed() {
         if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
