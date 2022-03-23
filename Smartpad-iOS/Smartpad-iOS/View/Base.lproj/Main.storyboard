@@ -107,6 +107,8 @@
                             <outletCollection property="gestureRecognizers" destination="5E8-qQ-Jdj" appends="YES" id="MzJ-3p-dpd"/>
                             <outletCollection property="gestureRecognizers" destination="aTU-gd-pTl" appends="YES" id="EfQ-jX-wzm"/>
                             <outletCollection property="gestureRecognizers" destination="fBV-9l-3jc" appends="YES" id="tFi-KO-ImR"/>
+                            <outletCollection property="gestureRecognizers" destination="bGb-Oj-DpP" appends="YES" id="ttY-Zs-YHC"/>
+                            <outletCollection property="gestureRecognizers" destination="uYu-Fb-Ze7" appends="YES" id="hy9-Qo-X4H"/>
                         </connections>
                     </view>
                     <connections>
@@ -120,28 +122,45 @@
                 <pinchGestureRecognizer id="Py8-e4-HSg">
                     <connections>
                         <action selector="pinchRecognizer:" destination="K6j-gl-drQ" id="tG8-Ya-GO2"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="c0O-9H-gZS"/>
                     </connections>
                 </pinchGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="Zp2-f6-Ep8" userLabel="Single Pan Gesture Recognizer">
                     <connections>
                         <action selector="singlePanRecognizer:" destination="K6j-gl-drQ" id="qmJ-WB-nss"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="VX3-7b-tYt"/>
                     </connections>
                 </panGestureRecognizer>
                 <tapGestureRecognizer id="5E8-qQ-Jdj" userLabel="Single Tap Gesture Recognizer">
                     <connections>
                         <action selector="singleTapRecognizer:" destination="K6j-gl-drQ" id="ifu-RK-P18"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="BXQ-b8-Efo"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer numberOfTouchesRequired="2" id="aTU-gd-pTl" userLabel="Double Tap Gesture Recognizer">
                     <connections>
                         <action selector="doubleTapRecognizer:" destination="K6j-gl-drQ" id="3js-kq-LEN"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="z65-XW-gOf"/>
                     </connections>
                 </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="2" maximumNumberOfTouches="2" id="fBV-9l-3jc" userLabel="Double Pan Gesture Recognizer">
                     <connections>
                         <action selector="doublePanRecognizer:" destination="K6j-gl-drQ" id="ZRF-M4-H1K"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="JsI-0T-2vq"/>
                     </connections>
                 </panGestureRecognizer>
+                <pongPressGestureRecognizer cancelsTouchesInView="NO" allowableMovement="10" minimumPressDuration="0.0" id="bGb-Oj-DpP" userLabel="Single Touch Gesture Recognizer">
+                    <connections>
+                        <action selector="touchRecognizer:" destination="K6j-gl-drQ" id="7Zo-rM-pyo"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="AC6-BZ-Wyc"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer cancelsTouchesInView="NO" allowableMovement="10" minimumPressDuration="0.0" numberOfTouchesRequired="2" id="uYu-Fb-Ze7" userLabel="Double Touch Gesture Recognizer">
+                    <connections>
+                        <action selector="touchRecognizer:" destination="K6j-gl-drQ" id="MWd-ZE-97L"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="bN2-Qd-ech"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1292.753623188406" y="45.535714285714285"/>
         </scene>

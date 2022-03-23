@@ -6,7 +6,7 @@
 //
 import Foundation
 import CoreHaptics
-/* TODO: LATER IMPLEMENT THIS OURSELVES THIS IS JUST COPY-PASTED CODE */
+
 class HapticManager {
   let hapticEngine: CHHapticEngine
 
@@ -27,40 +27,22 @@ class HapticManager {
 
 extension HapticManager {
     private func touchDownPattern() throws -> CHHapticPattern {
-        let slice = CHHapticEvent(
-          eventType: .hapticContinuous,
-          parameters: [
-            CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.35),
-            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.25)
-          ],
-          relativeTime: 0,
-          duration: 0.25)
-
-//        let snip = CHHapticEvent(
-//          eventType: .hapticTransient,
-//          parameters: [
-//            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
-//            CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
-//          ],
-//          relativeTime: 0.08)
-
-        return try CHHapticPattern(events: [slice], parameters: [])
-    }
-    
-    private func touchReleasePattern() throws -> CHHapticPattern {
-//        let slice = CHHapticEvent(
-//          eventType: .hapticContinuous,
-//          parameters: [
-//            CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.35),
-//            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.25)
-//          ],
-//          relativeTime: 0,
-//          duration: 0.25)
-
         let snip = CHHapticEvent(
           eventType: .hapticTransient,
           parameters: [
             CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
+            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
+          ],
+          relativeTime: 0.08)
+
+        return try CHHapticPattern(events: [snip], parameters: [])
+    }
+    
+    private func touchReleasePattern() throws -> CHHapticPattern {
+        let snip = CHHapticEvent(
+          eventType: .hapticTransient,
+          parameters: [
+            CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.5),
             CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
           ],
           relativeTime: 0.02)
