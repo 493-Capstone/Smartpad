@@ -110,6 +110,7 @@
                             <outletCollection property="gestureRecognizers" destination="bGb-Oj-DpP" appends="YES" id="ttY-Zs-YHC"/>
                             <outletCollection property="gestureRecognizers" destination="uYu-Fb-Ze7" appends="YES" id="hy9-Qo-X4H"/>
                             <outletCollection property="gestureRecognizers" destination="bEv-j2-mvq" appends="YES" id="I3V-zC-sBP"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="connInfoLabel" destination="muU-FI-9pD" id="4VN-f7-nBb"/>
