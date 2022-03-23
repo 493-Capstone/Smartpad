@@ -42,10 +42,6 @@ class MainViewController: UIViewController {
 
         updateConnInfoUI()
     }
-    
-//    func gestureRecognizer(_: UIGestureRecognizer , shouldRecognizeSimultaneouslyWithGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
 
     @IBAction func touchRecognizer(_ recognizer: UILongPressGestureRecognizer) {
         if (recognizer.state == .began) {
@@ -61,8 +57,6 @@ class MainViewController: UIViewController {
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
         connectionManager?.sendMotion(gesture: packet)
-        
-        
     }
 
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {

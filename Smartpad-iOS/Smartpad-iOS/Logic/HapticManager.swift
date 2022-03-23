@@ -7,6 +7,8 @@
 import Foundation
 import CoreHaptics
 
+// Source consulted: https://www.raywenderlich.com/10608020-getting-started-with-core-haptics
+
 class HapticManager {
   let hapticEngine: CHHapticEngine
 
@@ -27,27 +29,27 @@ class HapticManager {
 
 extension HapticManager {
     private func touchDownPattern() throws -> CHHapticPattern {
-        let snip = CHHapticEvent(
+        let snap = CHHapticEvent(
           eventType: .hapticTransient,
           parameters: [
             CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
-            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
+            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.8)
           ],
-          relativeTime: 0.08)
+          relativeTime: 0) // Play immediately
 
-        return try CHHapticPattern(events: [snip], parameters: [])
+        return try CHHapticPattern(events: [snap], parameters: [])
     }
     
     private func touchReleasePattern() throws -> CHHapticPattern {
-        let snip = CHHapticEvent(
+        let snap = CHHapticEvent(
           eventType: .hapticTransient,
           parameters: [
-            CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.5),
+            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
             CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
           ],
-          relativeTime: 0.02)
+          relativeTime: 0) // Play immediately
 
-        return try CHHapticPattern(events: [snip], parameters: [])
+        return try CHHapticPattern(events: [snap], parameters: [])
     }
     
     func playTouchDown() {
