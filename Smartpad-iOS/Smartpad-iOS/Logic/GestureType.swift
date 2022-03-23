@@ -23,6 +23,9 @@ public enum GestureType: Codable {
     case DoublePanStarted
     case DoublePanChanged
     case DoublePanEnded
+    case DragPanStarted
+    case DragPanChanged
+    case DragPanEnded
     case SingleTap
     case DoubleTap
 }
