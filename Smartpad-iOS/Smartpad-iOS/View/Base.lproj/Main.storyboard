@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -107,6 +107,7 @@
                             <outletCollection property="gestureRecognizers" destination="5E8-qQ-Jdj" appends="YES" id="MzJ-3p-dpd"/>
                             <outletCollection property="gestureRecognizers" destination="aTU-gd-pTl" appends="YES" id="EfQ-jX-wzm"/>
                             <outletCollection property="gestureRecognizers" destination="fBV-9l-3jc" appends="YES" id="tFi-KO-ImR"/>
+                            <outletCollection property="gestureRecognizers" destination="bEv-j2-mvq" appends="YES" id="I3V-zC-sBP"/>
                         </connections>
                     </view>
                     <connections>
@@ -142,6 +143,11 @@
                         <action selector="doublePanRecognizer:" destination="K6j-gl-drQ" id="ZRF-M4-H1K"/>
                     </connections>
                 </panGestureRecognizer>
+                <gestureRecognizer id="bEv-j2-mvq" userLabel="Drag Pan Geture Recognizer" customClass="UIDragPanGestureRecognizer" customModule="Smartpad_iOS" customModuleProvider="target">
+                    <connections>
+                        <action selector="dragPanRecognizer:" destination="K6j-gl-drQ" id="kax-td-ynK"/>
+                    </connections>
+                </gestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1292.753623188406" y="45.535714285714285"/>
         </scene>
