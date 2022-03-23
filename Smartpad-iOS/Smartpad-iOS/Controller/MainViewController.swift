@@ -43,25 +43,26 @@ class MainViewController: UIViewController {
         updateConnInfoUI()
     }
 
+    @IBAction func touchRecognizer(_ recognizer: UILongPressGestureRecognizer) {
+        if (recognizer.state == .began) {
+            hapticManager?.playTouchDown()
+        }
+        if (recognizer.state == .ended) {
+            hapticManager?.playTouchRelease()
+        }
+    }
+    
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
-//        hapticManager?.playTouchdown()
         let payload = SingleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
-
-//        print("SingleTap")
-
         connectionManager?.sendMotion(gesture: packet)
     }
 
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
-//        hapticManager?.playTouchdown()
         let payload = DoubleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.DoubleTap, payload: encPayload)
-
-//        print("DoubleTap")
-
         connectionManager?.sendMotion(gesture: packet)
     }
 
@@ -235,3 +236,11 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+      _ gestureRecognizer: UIGestureRecognizer,
+      shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+      return true
+    }
+}

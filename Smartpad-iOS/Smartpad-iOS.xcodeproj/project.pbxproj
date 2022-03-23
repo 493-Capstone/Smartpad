@@ -519,6 +519,7 @@
 				DEVELOPMENT_TEAM = 39Q7V34K3W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smartpad-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "smartpad trackpad";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -529,8 +530,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -550,6 +550,7 @@
 				DEVELOPMENT_TEAM = 39Q7V34K3W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smartpad-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "smartpad trackpad";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -560,7 +561,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

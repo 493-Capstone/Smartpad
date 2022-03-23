@@ -6,7 +6,9 @@
 //
 import Foundation
 import CoreHaptics
-/* TODO: LATER IMPLEMENT THIS OURSELVES THIS IS JUST COPY-PASTED CODE */
+
+// Source consulted: https://www.raywenderlich.com/10608020-getting-started-with-core-haptics
+
 class HapticManager {
   let hapticEngine: CHHapticEngine
 
@@ -26,38 +28,55 @@ class HapticManager {
 }
 
 extension HapticManager {
-    private func slicePattern() throws -> CHHapticPattern {
-    let slice = CHHapticEvent(
-      eventType: .hapticContinuous,
-      parameters: [
-        CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.35),
-        CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.25)
-      ],
-      relativeTime: 0,
-      duration: 0.25)
+    private func touchDownPattern() throws -> CHHapticPattern {
+        let snap = CHHapticEvent(
+          eventType: .hapticTransient,
+          parameters: [
+            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
+            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.8)
+          ],
+          relativeTime: 0) // Play immediately
 
-    let snip = CHHapticEvent(
-      eventType: .hapticTransient,
-      parameters: [
-        CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
-        CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
-      ],
-      relativeTime: 0.08)
-
-    return try CHHapticPattern(events: [slice, snip], parameters: [])
+        return try CHHapticPattern(events: [snap], parameters: [])
     }
+    
+    private func touchReleasePattern() throws -> CHHapticPattern {
+        let snap = CHHapticEvent(
+          eventType: .hapticTransient,
+          parameters: [
+            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
+            CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
+          ],
+          relativeTime: 0) // Play immediately
 
-    func playSlice() {
-      do {
-        let pattern = try slicePattern()
-        try hapticEngine.start()
-        let player = try hapticEngine.makePlayer(with: pattern)
-        try player.start(atTime: CHHapticTimeImmediate)
-        hapticEngine.notifyWhenPlayersFinished { _ in
-          return .stopEngine
+        return try CHHapticPattern(events: [snap], parameters: [])
+    }
+    
+    func playTouchDown() {
+        do {
+            let pattern = try touchDownPattern()
+            try hapticEngine.start()
+            let player = try hapticEngine.makePlayer(with: pattern)
+            try player.start(atTime: CHHapticTimeImmediate)
+            hapticEngine.notifyWhenPlayersFinished { _ in
+              return .stopEngine
+            }
+        } catch {
+            print("Failed to play slice: \(error)")
         }
-      } catch {
-        print("Failed to play slice: \(error)")
-      }
+    }
+    
+    func playTouchRelease() {
+        do {
+            let pattern = try touchReleasePattern()
+            try hapticEngine.start()
+            let player = try hapticEngine.makePlayer(with: pattern)
+            try player.start(atTime: CHHapticTimeImmediate)
+            hapticEngine.notifyWhenPlayersFinished { _ in
+              return .stopEngine
+            }
+        } catch {
+            print("Failed to play slice: \(error)")
+        }
     }
 }
