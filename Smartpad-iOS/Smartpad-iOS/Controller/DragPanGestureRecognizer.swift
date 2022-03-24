@@ -43,6 +43,14 @@ class UIDragPanGestureRecognizer:
     /* The touch we are tracking */
     var trackedTouch : UITouch? = nil
 
+    /* For haptic feedback related to the gesture */
+    private var hapticManager: HapticManager?
+
+    override init(target: Any?, action: Selector?) {
+        super.init(target: target, action: action)
+        hapticManager = HapticManager()
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesBegan(touches, with: event)
 
@@ -68,9 +76,7 @@ class UIDragPanGestureRecognizer:
 
             work = DispatchWorkItem(block: {
                 self.currentPhase = .started
-                // TODO: Can we propagate this event to the listener?
-                // We can play a haptic when the long press is "confirmed"
-//                print("Long touch success")
+                self.hapticManager?.playTouchDown()
             })
 
             /* After 1s, consider the touch to be a "long touch" */
