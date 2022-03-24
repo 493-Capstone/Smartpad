@@ -8,9 +8,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - uses: actions/checkout@v2
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - uses: actions/checkout@v2
       - name: Build
         run: xcodebuild clean build -workspace Smartpad-iOS/Smartpad-iOS.xcodeproj/project.xcworkspace -scheme Smartpad-iOS -destination "platform=iOS Simulator,name=iPhone 12 Pro,OS=latest" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
       - name: Test
