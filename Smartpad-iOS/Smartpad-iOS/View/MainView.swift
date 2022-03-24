@@ -15,11 +15,11 @@ class MainView: UIView {
     }
 
     /**
-     * @brief: Draws the connection indicator in the top left of the screen
+     * @brief: Draws the connection indicator in the center of the screen
      */
     func drawConnStatus() {
         var path = UIBezierPath()
-        path = UIBezierPath(ovalIn: CGRect(x: 25, y: 50, width: 30, height: 30))
+        path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - 100, y: self.bounds.midY - 100, width: 200, height: 200))
         switch status {
             case ConnStatus.Unpaired, ConnStatus.UnpairedAndBroadcasting:
                 UIColor.red.setStroke()
