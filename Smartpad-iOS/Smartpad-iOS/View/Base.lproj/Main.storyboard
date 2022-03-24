@@ -76,23 +76,23 @@
                                     <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="jMG-U1-VGH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
-                                <rect key="frame" x="152" y="268" width="110" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
+                                <rect key="frame" x="197" y="283" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
+                                <rect key="frame" x="167.5" y="749" width="79" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pair now"/>
                                 <connections>
                                     <action selector="pairButtonPressed" destination="K6j-gl-drQ" eventType="touchUpInside" id="6OU-tq-Ld3"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
-                                <rect key="frame" x="197" y="283" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
-                                <rect key="frame" x="26" y="196" width="362" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
+                                <rect key="frame" x="153" y="196" width="108" height="64"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="TYM-iv-Uza"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -101,6 +101,14 @@
                         <viewLayoutGuide key="safeArea" id="YiP-mb-AD6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="muU-FI-9pD" firstAttribute="centerX" secondItem="bDn-wJ-NJH" secondAttribute="centerX" id="3WU-KR-bKx"/>
+                            <constraint firstItem="muU-FI-9pD" firstAttribute="centerX" secondItem="3nB-1v-6gP" secondAttribute="centerX" id="4QI-fF-IdE"/>
+                            <constraint firstItem="bDn-wJ-NJH" firstAttribute="top" secondItem="muU-FI-9pD" secondAttribute="bottom" constant="23" id="GQh-6Z-eA5"/>
+                            <constraint firstItem="KDK-VQ-tMM" firstAttribute="centerY" secondItem="3nB-1v-6gP" secondAttribute="centerY" constant="316.5" id="ONd-mt-Wsd"/>
+                            <constraint firstItem="muU-FI-9pD" firstAttribute="top" secondItem="YiP-mb-AD6" secondAttribute="top" constant="152" id="TDU-zj-WP6"/>
+                            <constraint firstItem="KDK-VQ-tMM" firstAttribute="centerX" secondItem="3nB-1v-6gP" secondAttribute="centerX" id="n3f-ry-SbN"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Py8-e4-HSg" appends="YES" id="unz-pt-f0m"/>
                             <outletCollection property="gestureRecognizers" destination="Zp2-f6-Ep8" appends="YES" id="bSf-AL-wt9"/>

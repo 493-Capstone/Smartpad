@@ -92,6 +92,11 @@ extension ConnectionManager{
                 
             case .connecting:
                 print("Connecting: \(peerID.displayName)")
+                mainVC.connStatus = ConnStatus.PairedAndDisconnected
+                DispatchQueue.main.async {
+                    self.mainVC.updateConnInfoUI()
+                    
+                }
             case .notConnected:
                 print("notConnected: \(peerID.displayName)")
                 mainVC.connStatus = ConnStatus.Unpaired
