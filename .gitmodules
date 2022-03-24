@@ -1,0 +1,3 @@
+[submodule "Smartpad-iOS/Smartpad-iOS/common"]
+	path = Smartpad-iOS/Smartpad-iOS/common
+	url = https://github.com/493-Capstone/common
