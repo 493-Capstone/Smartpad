@@ -58,6 +58,13 @@ class MainViewController: UIViewController {
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
         connectionManager?.sendMotion(gesture: packet)
     }
+    
+    @IBAction func singleTapDoubleClickRecognizer(_ recognizer: UITapGestureRecognizer) {
+        let payload = SingleTapDoubleClickPayload()
+        let encPayload = try? encoder.encode(payload)
+        let packet = GesturePacket(touchType: GestureType.SingleTapDoubleClick, payload: encPayload)
+        connectionManager?.sendMotion(gesture: packet)
+    }
 
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
         let payload = DoubleTapPayload()
