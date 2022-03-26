@@ -41,10 +41,13 @@ class UIDragPanGestureRecognizer:
     var translation: CGPoint = CGPoint.zero
 
     /* The touch we are tracking */
-    var trackedTouch : UITouch? = nil
+    var trackedTouch: UITouch? = nil
 
     /* For haptic feedback related to the gesture */
     private var hapticManager: HapticManager?
+
+    /* Tolerance for involuntary movement during the long touch */
+    var tolerance = CGFloat(10.0)
 
     override init(target: Any?, action: Selector?) {
         super.init(target: target, action: action)
@@ -86,12 +89,6 @@ class UIDragPanGestureRecognizer:
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesMoved(touches, with: event)
-        if (currentPhase == .notStarted) {
-            /* We started panning before fully ending touching! */
-            self.state = .failed
-            return
-//            print("Failed, didn't long press before panning")
-        }
 
         // Fails if we are tracking some touch other than the initial touch
         let newTouch = touches.first
@@ -104,6 +101,23 @@ class UIDragPanGestureRecognizer:
         let newPos = (newTouch?.location(in: self.view))!
         translation = CGPoint(x: newPos.x - initialPos.x,
                               y: newPos.y - initialPos.y)
+
+
+        if (currentPhase == .notStarted) {
+            /* We started panning before fully ending touching! */
+
+            /* Allow for slight, involuntary movements */
+            if (abs(translation.x) > tolerance || abs(translation.y) > tolerance) {
+                self.state = .failed
+                print("Failed, didn't long press before panning")
+            }
+            else
+            {
+                print("Ignored involuntary movement!")
+            }
+
+            return
+        }
 
         currentPhase = .changed
         self.state = .changed
