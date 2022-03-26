@@ -76,23 +76,23 @@
                                     <action selector="settingsButtonPressed" destination="K6j-gl-drQ" eventType="touchDown" id="jMG-U1-VGH"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
-                                <rect key="frame" x="197" y="283" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
-                                <rect key="frame" x="167.5" y="749" width="79" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
+                                <rect key="frame" x="152" y="268" width="110" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pair now"/>
                                 <connections>
                                     <action selector="pairButtonPressed" destination="K6j-gl-drQ" eventType="touchUpInside" id="6OU-tq-Ld3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
-                                <rect key="frame" x="153" y="196" width="108" height="64"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-wJ-NJH">
+                                <rect key="frame" x="197" y="283" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
+                                <rect key="frame" x="26" y="196" width="362" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="TYM-iv-Uza"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -101,14 +101,6 @@
                         <viewLayoutGuide key="safeArea" id="YiP-mb-AD6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="muU-FI-9pD" firstAttribute="centerX" secondItem="bDn-wJ-NJH" secondAttribute="centerX" id="3WU-KR-bKx"/>
-                            <constraint firstItem="muU-FI-9pD" firstAttribute="centerX" secondItem="3nB-1v-6gP" secondAttribute="centerX" id="4QI-fF-IdE"/>
-                            <constraint firstItem="bDn-wJ-NJH" firstAttribute="top" secondItem="muU-FI-9pD" secondAttribute="bottom" constant="23" id="GQh-6Z-eA5"/>
-                            <constraint firstItem="KDK-VQ-tMM" firstAttribute="centerY" secondItem="3nB-1v-6gP" secondAttribute="centerY" constant="316.5" id="ONd-mt-Wsd"/>
-                            <constraint firstItem="muU-FI-9pD" firstAttribute="top" secondItem="YiP-mb-AD6" secondAttribute="top" constant="152" id="TDU-zj-WP6"/>
-                            <constraint firstItem="KDK-VQ-tMM" firstAttribute="centerX" secondItem="3nB-1v-6gP" secondAttribute="centerX" id="n3f-ry-SbN"/>
-                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Py8-e4-HSg" appends="YES" id="unz-pt-f0m"/>
                             <outletCollection property="gestureRecognizers" destination="Zp2-f6-Ep8" appends="YES" id="bSf-AL-wt9"/>
@@ -124,8 +116,17 @@
                     <connections>
                         <outlet property="connInfoLabel" destination="muU-FI-9pD" id="4VN-f7-nBb"/>
                         <outlet property="connSpinner" destination="bDn-wJ-NJH" id="qLT-8Z-5nh"/>
+                        <outlet property="doublePanGestureRecognizer" destination="fBV-9l-3jc" id="acw-Mn-hIG"/>
+                        <outlet property="doubleTapGestureRecognizer" destination="aTU-gd-pTl" id="nIt-GM-xLA"/>
+                        <outlet property="doubleTouchGestureRecognizer" destination="uYu-Fb-Ze7" id="byW-G0-fz4"/>
+                        <outlet property="dragPanGestureRecognizer" destination="bEv-j2-mvq" id="8v7-uQ-b8S"/>
                         <outlet property="pairButton" destination="KDK-VQ-tMM" id="8xo-d1-bEC"/>
+                        <outlet property="pinchGestureRecognizer" destination="Py8-e4-HSg" id="3ZP-o5-4N7"/>
                         <outlet property="settingsButton" destination="ioM-n6-mw4" id="weV-yD-flG"/>
+                        <outlet property="singlePanGestureRecognizer" destination="Zp2-f6-Ep8" id="uYc-0f-B9K"/>
+                        <outlet property="singleTapDoubleClickGestureRecognizer" destination="lZD-Hu-7cJ" id="zwK-PS-Gst"/>
+                        <outlet property="singleTapGestureRecognizer" destination="5E8-qQ-Jdj" id="lkp-TN-6pu"/>
+                        <outlet property="singleTouchGestureRecognizer" destination="bGb-Oj-DpP" id="fpB-EG-Ekm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGH-zj-e4W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -135,12 +136,6 @@
                         <outlet property="delegate" destination="K6j-gl-drQ" id="c0O-9H-gZS"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="Zp2-f6-Ep8" userLabel="Single Pan Gesture Recognizer">
-                    <connections>
-                        <action selector="singlePanRecognizer:" destination="K6j-gl-drQ" id="qmJ-WB-nss"/>
-                        <outlet property="delegate" destination="K6j-gl-drQ" id="VX3-7b-tYt"/>
-                    </connections>
-                </panGestureRecognizer>
                 <tapGestureRecognizer id="5E8-qQ-Jdj" userLabel="Single Tap Gesture Recognizer">
                     <connections>
                         <action selector="singleTapRecognizer:" destination="K6j-gl-drQ" id="ifu-RK-P18"/>
@@ -159,12 +154,24 @@
                         <outlet property="delegate" destination="K6j-gl-drQ" id="z65-XW-gOf"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="Zp2-f6-Ep8" userLabel="Single Pan Gesture Recognizer">
+                    <connections>
+                        <action selector="singlePanRecognizer:" destination="K6j-gl-drQ" id="qmJ-WB-nss"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="VX3-7b-tYt"/>
+                    </connections>
+                </panGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="2" maximumNumberOfTouches="2" id="fBV-9l-3jc" userLabel="Double Pan Gesture Recognizer">
                     <connections>
                         <action selector="doublePanRecognizer:" destination="K6j-gl-drQ" id="ZRF-M4-H1K"/>
                         <outlet property="delegate" destination="K6j-gl-drQ" id="JsI-0T-2vq"/>
                     </connections>
                 </panGestureRecognizer>
+                <gestureRecognizer id="bEv-j2-mvq" userLabel="Drag Pan Geture Recognizer" customClass="UIDragPanGestureRecognizer" customModule="Smartpad_iOS" customModuleProvider="target">
+                    <connections>
+                        <action selector="dragPanRecognizer:" destination="K6j-gl-drQ" id="kax-td-ynK"/>
+                        <outlet property="delegate" destination="K6j-gl-drQ" id="jhM-i3-eKj"/>
+                    </connections>
+                </gestureRecognizer>
                 <pongPressGestureRecognizer cancelsTouchesInView="NO" allowableMovement="10" minimumPressDuration="0.0" id="bGb-Oj-DpP" userLabel="Single Touch Gesture Recognizer">
                     <connections>
                         <action selector="touchRecognizer:" destination="K6j-gl-drQ" id="7Zo-rM-pyo"/>
@@ -177,11 +184,6 @@
                         <outlet property="delegate" destination="K6j-gl-drQ" id="bN2-Qd-ech"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <gestureRecognizer id="bEv-j2-mvq" userLabel="Drag Pan Geture Recognizer" customClass="UIDragPanGestureRecognizer" customModule="Smartpad_iOS" customModuleProvider="target">
-                    <connections>
-                        <action selector="dragPanRecognizer:" destination="K6j-gl-drQ" id="kax-td-ynK"/>
-                    </connections>
-                </gestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1292.753623188406" y="45.535714285714285"/>
         </scene>

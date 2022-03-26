@@ -28,7 +28,20 @@ class MainViewController: UIViewController {
     /* Spinner shown when broadcasting or attempting to reconnect */
     @IBOutlet var connSpinner: UIActivityIndicatorView!
 
+    
+    // gesture recognizers
+    @IBOutlet var pinchGestureRecognizer: UIPinchGestureRecognizer!
+    @IBOutlet var singleTapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet var singleTapDoubleClickGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet var doubleTapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet var singlePanGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet var doublePanGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet var dragPanGestureRecognizer: UIGestureRecognizer!
+    @IBOutlet var singleTouchGestureRecognizer: UILongPressGestureRecognizer!
+    @IBOutlet var doubleTouchGestureRecognizer: UILongPressGestureRecognizer!
+    
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -246,8 +259,11 @@ class MainViewController: UIViewController {
 extension MainViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
       _ gestureRecognizer: UIGestureRecognizer,
-      shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+      shouldRecognizeSimultaneouslyWith simultaneousGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
-      return true
+        if ((gestureRecognizer == self.singleTouchGestureRecognizer || gestureRecognizer == self.doubleTouchGestureRecognizer) && (simultaneousGestureRecognizer == self.singleTapGestureRecognizer || simultaneousGestureRecognizer == self.singleTapDoubleClickGestureRecognizer || simultaneousGestureRecognizer == self.doubleTapGestureRecognizer || simultaneousGestureRecognizer == self.singlePanGestureRecognizer || simultaneousGestureRecognizer == self.doublePanGestureRecognizer || simultaneousGestureRecognizer == self.dragPanGestureRecognizer || simultaneousGestureRecognizer == self.pinchGestureRecognizer)) {
+            return true
+        }
+      return false
     }
 }
