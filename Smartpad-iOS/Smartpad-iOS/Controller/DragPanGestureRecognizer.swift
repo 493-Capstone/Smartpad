@@ -34,8 +34,11 @@ class UIDragPanGestureRecognizer:
     /* Controls length of required time for long touching */
     private let longTouchTime = 1
 
-    /* Initial point we touched */
+    /* Initial point we touched. This is used for allowing a small tolerance radius for the 1s long touch */
     var initialPos: CGPoint = CGPoint.zero
+
+    /* Starting position for the dragpan. We reference the translation from dragging with this as the origin */
+    var startPos: CGPoint = CGPoint.zero
 
     /* Translation from the initial point */
     var translation: CGPoint = CGPoint.zero
@@ -67,6 +70,7 @@ class UIDragPanGestureRecognizer:
             if self.trackedTouch == nil {
                 self.trackedTouch = touches.first
                 self.initialPos = (self.trackedTouch?.location(in: self.view))!
+                self.startPos = self.initialPos
             }
             else {
                // Ignore all but the first touch.
@@ -99,25 +103,31 @@ class UIDragPanGestureRecognizer:
 
         /* Calculate the translation from the initial touch */
         let newPos = (newTouch?.location(in: self.view))!
-        translation = CGPoint(x: newPos.x - initialPos.x,
-                              y: newPos.y - initialPos.y)
 
 
         if (currentPhase == .notStarted) {
             /* We started panning before fully ending touching! */
 
+            let distFromInitial = CGPoint(x: newPos.x - initialPos.x,
+                                          y: newPos.y - initialPos.y)
+
             /* Allow for slight, involuntary movements */
-            if (abs(translation.x) > tolerance || abs(translation.y) > tolerance) {
+            if (abs(distFromInitial.x) > tolerance || abs(distFromInitial.y) > tolerance) {
                 self.state = .failed
-                print("Failed, didn't long press before panning")
+//                print("Failed, didn't long press before panning")
             }
             else
             {
+                /* Update the origin point for panning, otherwise the mouse jumps after the first pan occurs */
+                startPos = newPos
                 print("Ignored involuntary movement!")
             }
 
             return
         }
+
+        translation = CGPoint(x: newPos.x - startPos.x,
+                              y: newPos.y - startPos.y)
 
         currentPhase = .changed
         self.state = .changed
@@ -160,6 +170,7 @@ class UIDragPanGestureRecognizer:
         currentPhase = .notStarted
         trackedTouch = nil
         initialPos = CGPoint.zero
+        startPos = CGPoint.zero
         translation = CGPoint.zero
     }
 }
