@@ -25,8 +25,8 @@ class MainView: UIView {
      */
     func drawConnStatus() {
         var path = UIBezierPath()
-        path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - (diameter / 2) + 2 * lineWidth,
-                                           y: self.bounds.midY - (diameter / 2) + 2 * lineWidth,
+        path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - (diameter / 2),
+                                           y: self.bounds.midY - (diameter / 2),
                                            width: diameter, height: diameter))
         switch status {
             case ConnStatus.Unpaired, ConnStatus.UnpairedAndBroadcasting:
