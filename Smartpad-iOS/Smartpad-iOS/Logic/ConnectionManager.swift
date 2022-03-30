@@ -64,6 +64,9 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
     }
+    func stopHosting(){
+        advertiser?.stopAdvertisingPeer()
+    }
 
 }
 
@@ -85,6 +88,7 @@ extension ConnectionManager{
             case .connected:
                 print("Connected: \(peerID.displayName)")
                 mainVC.connStatus = ConnStatus.PairedAndConnected
+                self.advertiser?.stopAdvertisingPeer()
                 DispatchQueue.main.async {
                     self.mainVC.updateConnInfoUI()
                     

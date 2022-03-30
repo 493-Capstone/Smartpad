@@ -190,6 +190,7 @@ class MainViewController: UIViewController {
             /* The settings button is actually a cancel button in this case*/
             connStatus = ConnStatus.Unpaired
             updateConnInfoUI()
+            connectionManager?.stopHosting()
         }
         else {
             /* Show settings page */
