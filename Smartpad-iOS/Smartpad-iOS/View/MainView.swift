@@ -14,12 +14,20 @@ class MainView: UIView {
         drawConnStatus()
     }
 
+    /* Diameter in pixels */
+    private let diameter = CGFloat(200.0)
+
+    /* Line width in pixels*/
+    private let lineWidth = CGFloat(5.0)
+
     /**
      * @brief: Draws the connection indicator in the center of the screen
      */
     func drawConnStatus() {
         var path = UIBezierPath()
-        path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - 100, y: self.bounds.midY - 100, width: 200, height: 200))
+        path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - (diameter / 2),
+                                           y: self.bounds.midY - (diameter / 2),
+                                           width: diameter, height: diameter))
         switch status {
             case ConnStatus.Unpaired, ConnStatus.UnpairedAndBroadcasting:
                 UIColor.red.setStroke()
@@ -36,7 +44,7 @@ class MainView: UIView {
 
         UIColor.black.setStroke()
 
-        path.lineWidth = 5
+        path.lineWidth = lineWidth
         path.stroke()
         path.fill()
     }
