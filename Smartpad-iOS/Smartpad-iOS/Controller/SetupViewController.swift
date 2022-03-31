@@ -15,8 +15,7 @@ class SetupViewController: UIViewController {
         super.viewDidLoad()
     }
     override func viewDidAppear(_ animated: Bool) {
-        let connData = ConnectionData()
-        if connData.getDeviceName() != "" {
+        if ConnectionData().getDeviceName() != "" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "main") as! MainViewController
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
@@ -36,5 +35,17 @@ class SetupViewController: UIViewController {
         else {
             /* Text field was empty, don't allow empty identifiers */
         }
+    }
+
+    /* Only allow viewing in portrait mode */
+    // https://developer.apple.com/forums/thread/62008
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+            return UIInterfaceOrientationMask.portrait
+    }
+
+    /* Don't allow rotating */
+    // https://developer.apple.com/forums/thread/62008
+    override var shouldAutorotate: Bool {
+        return false
     }
 }
