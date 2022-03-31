@@ -11,14 +11,13 @@ import MultipeerConnectivity
 class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate{
 
     
-    var peerID: MCPeerID!
-    var p2pSession: MCSession?
-    var p2pBrowser: MCNearbyServiceBrowser!
-    var previousCoordinates: CGPoint = CGPoint.init()
-    var advertiser: MCNearbyServiceAdvertiser?
-    var peerName: String = ""
+    private var peerID: MCPeerID!
+    private var p2pSession: MCSession?
+    private var p2pBrowser: MCNearbyServiceBrowser!
+    private var previousCoordinates: CGPoint = CGPoint.init()
+    private var advertiser: MCNearbyServiceAdvertiser?
     var mainVC: MainViewController!
-
+    private var connStatus = ConnStatus.Unpaired
     
     override init(){
         super.init()
@@ -55,18 +54,31 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         p2pSession = MCSession.init(peer: peerID!, securityIdentity: nil, encryptionPreference: .required)
         p2pSession?.delegate = self
 
+        connStatus = .PairedAndDisconnected
+        mainVC?.updateConnInfoUI()
     }
-    
-    
+
     func startHosting(){
-        
         advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "smartpad")
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
+
+        if (ConnectionData().getSelectedPeer() == "") {
+            /* We have no peer, which means we are advertising to try to find a peer */
+            connStatus = .UnpairedAndBroadcasting
+        }
+        else {
+            /* We have a peer, which means we are disconnected and trying to reconnect */
+            connStatus = .PairedAndDisconnected
+        }
+
+        mainVC?.updateConnInfoUI()
     }
 
     func stopHosting(){
         advertiser?.stopAdvertisingPeer()
+        connStatus = .Unpaired
+        mainVC?.updateConnInfoUI()
     }
     
     func unpairDevice(){
@@ -78,9 +90,9 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         connData.setSelectedPeer(name: "")
         p2pSession.disconnect()
         advertiser?.stopAdvertisingPeer()
-        self.mainVC?.connStatus = .Unpaired
-        self.mainVC?.updateConnInfoUI()
-  
+
+        connStatus = .Unpaired
+        mainVC?.updateConnInfoUI()
     }
     
     func stopP2PSession(){
@@ -91,6 +103,12 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         p2pSession.disconnect()
     }
 
+    /**
+     * @brief get the current connection status
+     */
+    func getConnStatus() -> ConnStatus {
+        return connStatus
+    }
 }
 
 extension ConnectionManager{
@@ -112,7 +130,7 @@ extension ConnectionManager{
                 print("Connected: \(peerID.displayName)")
                 let connData = ConnectionData()
                 connData.setSelectedPeer(name: peerID.displayName)
-                mainVC.connStatus = ConnStatus.PairedAndConnected
+                connStatus = ConnStatus.PairedAndConnected
                 self.advertiser?.stopAdvertisingPeer()
                 self.mainVC.updateConnInfoUI()
                 
@@ -126,12 +144,12 @@ extension ConnectionManager{
                 if(connData.getSelectedPeer() != ""){
                     if(p2pSession?.connectedPeers.count == 0){
                         // Ensure no peers are connected
-                        mainVC.connStatus = ConnStatus.PairedAndDisconnected
+                        connStatus = ConnStatus.PairedAndDisconnected
                         advertiser?.startAdvertisingPeer()
                         self.mainVC.updateConnInfoUI()
                     }
                 } else {
-                    mainVC.connStatus = ConnStatus.Unpaired
+                    connStatus = ConnStatus.Unpaired
                     advertiser?.stopAdvertisingPeer()
                     self.mainVC.updateConnInfoUI()
                 }

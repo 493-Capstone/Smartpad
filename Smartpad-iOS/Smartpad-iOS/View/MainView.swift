@@ -8,7 +8,6 @@
 import UIKit
 
 class MainView: UIView {
-    var status: ConnStatus = ConnStatus.Unpaired
     
     override func draw(_ rect: CGRect) {
         drawConnStatus()
@@ -36,16 +35,17 @@ class MainView: UIView {
         path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - (diameter / 2),
                                            y: self.bounds.midY - (diameter / 2),
                                            width: diameter, height: diameter))
-        switch status {
-            case ConnStatus.Unpaired, ConnStatus.UnpairedAndBroadcasting:
+
+        switch ConnectionManagerAccess.connectionManager.getConnStatus() {
+            case .Unpaired, .UnpairedAndBroadcasting:
                 UIColor.red.setStroke()
                 UIColor.red.setFill()
 
-            case ConnStatus.PairedAndDisconnected:
+            case .PairedAndDisconnected:
                 UIColor.yellow.setStroke()
                 UIColor.yellow.setFill()
 
-            case ConnStatus.PairedAndConnected:
+            case .PairedAndConnected:
                 UIColor.green.setStroke()
                 UIColor.green.setFill()
         }

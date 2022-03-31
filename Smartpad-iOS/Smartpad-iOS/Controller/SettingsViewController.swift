@@ -14,6 +14,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet var changeNameLabel: UILabel!
     @IBOutlet var changeNameField: UITextField!
     @IBOutlet var unpairButton: UIButton!
+
+    private var connectionManager: ConnectionManager?
     
     /* Passed on initialization */
     var connStatus: ConnStatus!
@@ -21,39 +23,39 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        connectionManager = ConnectionManagerAccess.connectionManager
+
+        updateConnUI()
+    }
+
+    /**
+     * @brief Update the portions of the UI that are dependent on whether we are paired or not
+     */
+    private func updateConnUI() {
+        let connStatus = connectionManager?.getConnStatus()
         if (connStatus == ConnStatus.Unpaired) {
-            /* Show settings for unpaired device */
-            setUIToUnpairedStatus()
+            pairedInfoLabel.text = "Device is not paired."
+            unpairButton.isHidden = true
+
+            changeNameLabel.text = "Change name:"
+            changeNameField.isHidden = false
+            // TODO: set changeNameField text to the current device identifier
+            changeNameField.text = "TODO: Fill me in with the current id!"
         }
         else {
-            /* Show settings for paired device */
-            setUIToPairedStatus()
-        }
-    }
-    
-    private func setUIToUnpairedStatus(){
-        pairedInfoLabel.text = "Device is not paired."
-        unpairButton.isHidden = true
-        
-        changeNameLabel.text = "Change name:"
-        changeNameField.isHidden = false
-        // TODO: set changeNameField text to the current device identifier
-        changeNameField.text = "TODO: Fill me in with the current id!"
-    }
-    
-    private func setUIToPairedStatus(){
-        let connData = ConnectionData()
-        let pairedDeviceName = connData.getSelectedPeer()
-        pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
-        unpairButton.isHidden = false
+            let connData = ConnectionData()
+            let pairedDeviceName = connData.getSelectedPeer()
+            pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
+            unpairButton.isHidden = false
 
-        changeNameLabel.text = "Changing name is not available when paired."
-        changeNameField.isHidden = true
+            changeNameLabel.text = "Changing name is not available when paired."
+            changeNameField.isHidden = true
+        }
     }
     
     @IBAction func unpairDevice(_ sender: UIButton) {
-        ConnectionManagerAccess.connectionManager.unpairDevice()
-        setUIToUnpairedStatus()
+        connectionManager?.unpairDevice()
+        updateConnUI()
     }
     
     @IBAction func backButtonPressed() {
