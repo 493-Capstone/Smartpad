@@ -33,8 +33,9 @@ class SettingsViewController: UIViewController {
         }
         else {
             /* Show settings for paired device */
-            // TODO: Show the true paired name
-            pairedInfoLabel.text = "Device is paired."
+            let connData = ConnectionData()
+            let pairedDeviceName = connData.getSelectedPeer()
+            pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
             unpairButton.isHidden = false
 
             changeNameLabel.text = "Changing name is not available when paired."

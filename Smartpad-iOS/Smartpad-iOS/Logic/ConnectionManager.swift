@@ -78,8 +78,15 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         connData.setSelectedPeer(name: "")
         p2pSession.disconnect()
         advertiser?.stopAdvertisingPeer()
+  
+    }
+    
+    func stopP2PSession(){
+        guard let p2pSession = p2pSession else {
+            return
+        }
         
-        
+        p2pSession.disconnect()
     }
 
 }
@@ -109,17 +116,24 @@ extension ConnectionManager{
                 
             case .connecting:
                 break
-            // Don't show anything, this doesn't correspond to any state in ConnStatus (at least for now)
-//                print("Connecting: \(peerID.displayName)")
-//                mainVC.connStatus = ConnStatus.PairedAndDisconnected
-//                self.mainVC.updateConnInfoUI()
 
             case .notConnected:
 //                print("notConnected: \(peerID.displayName)")
                 /* We are still paired, just lost connection. Update the UI to indicate that we are attempting to reconnect */
-                mainVC.connStatus = ConnStatus.PairedAndDisconnected
-                advertiser?.stopAdvertisingPeer()
-                self.mainVC.updateConnInfoUI()
+                let connData = ConnectionData()
+                if(connData.getSelectedPeer() != ""){
+                    if(p2pSession?.connectedPeers.count == 0){
+                        // Ensure no peers are connected
+                        mainVC.connStatus = ConnStatus.PairedAndDisconnected
+                        advertiser?.startAdvertisingPeer()
+                        self.mainVC.updateConnInfoUI()
+                    }
+                } else {
+                    mainVC.connStatus = ConnStatus.Unpaired
+                    advertiser?.stopAdvertisingPeer()
+                    self.mainVC.updateConnInfoUI()
+                }
+
 
         @unknown default:
             print("unknown state")
@@ -132,6 +146,15 @@ extension ConnectionManager{
     }
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         // creates dialog box to accept or reject the connection request
+        let connData = ConnectionData()
+        if(connData.getSelectedPeer() != ""){
+            if(connData.getSelectedPeer() == peerID.displayName){
+                // accept invite and return
+                invitationHandler(true, self.p2pSession)
+                
+                return
+            }
+        }
         let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName)' wants to connect", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Accept", style: .default, handler: { [weak self] _ in
             invitationHandler(true, self?.p2pSession)
