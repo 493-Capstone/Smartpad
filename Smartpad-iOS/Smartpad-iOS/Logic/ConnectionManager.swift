@@ -78,6 +78,8 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         connData.setSelectedPeer(name: "")
         p2pSession.disconnect()
         advertiser?.stopAdvertisingPeer()
+        self.mainVC?.connStatus = .Unpaired
+        self.mainVC?.updateConnInfoUI()
   
     }
     

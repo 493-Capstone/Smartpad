@@ -48,6 +48,13 @@ class MainViewController: UIViewController {
         /* Setup the connection manager */
         connectionManager = ConnectionManagerAccess.connectionManager
         connectionManager?.mainVC = self
+        let connData = ConnectionData()
+        if(connData.getSelectedPeer() != ""){
+//            print("I have peer")
+            connectionManager?.startHosting()
+            self.connStatus = ConnStatus.PairedAndDisconnected
+            self.updateConnInfoUI()
+        }
 
         /* Setup the haptic engine */
         hapticManager = HapticManager()
@@ -55,16 +62,6 @@ class MainViewController: UIViewController {
         updateConnInfoUI()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        let connData = ConnectionData()
-        
-        if(connData.getSelectedPeer() != ""){
-//            print("I have peer")
-            connectionManager?.startHosting()
-            self.connStatus = ConnStatus.PairedAndDisconnected
-            self.updateConnInfoUI()
-        }
-    }
 
     @IBAction func touchRecognizer(_ recognizer: UILongPressGestureRecognizer) {
         if (recognizer.state == .began) {
