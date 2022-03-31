@@ -39,7 +39,6 @@ class MainViewController: UIViewController {
     @IBOutlet var dragPanGestureRecognizer: UIGestureRecognizer!
     @IBOutlet var singleTouchGestureRecognizer: UILongPressGestureRecognizer!
     @IBOutlet var doubleTouchGestureRecognizer: UILongPressGestureRecognizer!
-    
 
     
     override func viewDidLoad() {
@@ -202,7 +201,6 @@ class MainViewController: UIViewController {
         }
     }
 
-
     @IBAction func pairButtonPressed() {
         connStatus = ConnStatus.UnpairedAndBroadcasting
         updateConnInfoUI()
@@ -210,50 +208,72 @@ class MainViewController: UIViewController {
         connectionManager.startHosting()
     }
 
+    /**
+     * @brief Disables or enables all gesture recognizers
+     *
+     * @param[in] bool Whether gestures should be recognized
+     */
+    func shouldRecognizeGestures(enabled: Bool) {
+        for recognizer in self.view.gestureRecognizers! {
+            recognizer.isEnabled = enabled
+        }
+    }
 
-    
     /**
      * @brief Updates all of the UI that is related to the current connection status
      */
     func updateConnInfoUI() {
-        switch connStatus {
-            case ConnStatus.Unpaired:
-                settingsButton.setTitle("Settings", for: .normal)
+        DispatchQueue.main.async {
+            switch self.connStatus {
+                case ConnStatus.Unpaired:
+                    self.settingsButton.setTitle("Settings", for: .normal)
 
-                connInfoLabel.text = "Unpaired"
-                connSpinner.isHidden = true
-                connSpinner.stopAnimating()
-                pairButton.isHidden = false
+                    self.connInfoLabel.text = "Unpaired"
+                    self.connSpinner.isHidden = true
+                    self.connSpinner.stopAnimating()
+                    self.pairButton.isHidden = false
 
-            case ConnStatus.UnpairedAndBroadcasting:
-                /* Use the settings button as a cancel button in this state */
-                settingsButton.setTitle("Cancel", for: .normal)
+                    /* Can't send gesture data when disconnected */
+                    self.shouldRecognizeGestures(enabled: false)
 
-                connInfoLabel.text = "Broadcasting..."
-                connSpinner.isHidden = false
-                connSpinner.startAnimating()
-                pairButton.isHidden = true
+                case ConnStatus.UnpairedAndBroadcasting:
+                    /* Use the settings button as a cancel button in this state */
+                    self.settingsButton.setTitle("Cancel", for: .normal)
 
-            case ConnStatus.PairedAndConnected:
-                settingsButton.setTitle("Settings", for: .normal)
+                    self.connInfoLabel.text = "Broadcasting..."
+                    self.connSpinner.isHidden = false
+                    self.connSpinner.startAnimating()
+                    self.pairButton.isHidden = true
 
-                connInfoLabel.text = "Swipe or tap to start"
-                connSpinner.isHidden = true
-                connSpinner.stopAnimating()
-                pairButton.isHidden = true
+                    /* Can't send gesture data when disconnected */
+                    self.shouldRecognizeGestures(enabled: false)
 
-            case ConnStatus.PairedAndDisconnected:
-                settingsButton.setTitle("Settings", for: .normal)
+                case ConnStatus.PairedAndConnected:
+                    self.settingsButton.setTitle("Settings", for: .normal)
 
-                connInfoLabel.text = "MacOS device not found, attempting to reconnect..."
-                connSpinner.isHidden = false
-                connSpinner.startAnimating()
-                pairButton.isHidden = true
+                    self.connInfoLabel.text = "Swipe or tap to start"
+                    self.connSpinner.isHidden = true
+                    self.connSpinner.stopAnimating()
+                    self.pairButton.isHidden = true
+
+                    self.shouldRecognizeGestures(enabled: true)
+
+                case ConnStatus.PairedAndDisconnected:
+                    self.settingsButton.setTitle("Settings", for: .normal)
+
+                    self.connInfoLabel.text = "Disconnected, attempting to reconnect..."
+                    self.connSpinner.isHidden = false
+                    self.connSpinner.startAnimating()
+                    self.pairButton.isHidden = true
+
+                    /* Can't send gesture data when disconnected */
+                    self.shouldRecognizeGestures(enabled: false)
+            }
+
+            /* Draw the connection status and the spinner */
+            (self.view as! MainView).status = self.connStatus
+            self.view.setNeedsDisplay()
         }
-
-        /* Draw the connection status and the spinner */
-        (self.view as! MainView).status = connStatus
-        self.view.setNeedsDisplay()
     }
 }
 
