@@ -46,14 +46,22 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         /* Setup the connection manager */
-        connectionManager = ConnectionManager()
+        connectionManager = ConnectionManagerAccess.connectionManager
         connectionManager?.mainVC = self
-        
+        let connData = ConnectionData()
+        if(connData.getSelectedPeer() != ""){
+//            print("I have peer")
+            connectionManager?.startHosting()
+            self.connStatus = ConnStatus.PairedAndDisconnected
+            self.updateConnInfoUI()
+        }
+
         /* Setup the haptic engine */
         hapticManager = HapticManager()
 
         updateConnInfoUI()
     }
+    
 
     @IBAction func touchRecognizer(_ recognizer: UILongPressGestureRecognizer) {
         if (recognizer.state == .began) {
