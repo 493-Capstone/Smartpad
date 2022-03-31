@@ -20,13 +20,14 @@ class SetupViewController: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }
-        
     }
     
     @IBAction func didFillText() {
         if let unwrapped = idField.text {
-            // set device name
+            /* Set device name */
             ConnectionData().setDeviceName(name: unwrapped)
+
+            /* Transition to main view controller */
             let vc = storyboard?.instantiateViewController(withIdentifier: "main") as! MainViewController
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
