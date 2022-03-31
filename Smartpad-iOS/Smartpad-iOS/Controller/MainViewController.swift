@@ -288,11 +288,13 @@ class MainViewController: UIViewController {
 extension MainViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
       _ gestureRecognizer: UIGestureRecognizer,
-      shouldRecognizeSimultaneouslyWith simultaneousGestureRecognizer: UIGestureRecognizer
+      shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
-        if ((gestureRecognizer == self.singleTouchGestureRecognizer || gestureRecognizer == self.doubleTouchGestureRecognizer) && (simultaneousGestureRecognizer == self.singleTapGestureRecognizer || simultaneousGestureRecognizer == self.singleTapDoubleClickGestureRecognizer || simultaneousGestureRecognizer == self.doubleTapGestureRecognizer || simultaneousGestureRecognizer == self.singlePanGestureRecognizer || simultaneousGestureRecognizer == self.doublePanGestureRecognizer || simultaneousGestureRecognizer == self.dragPanGestureRecognizer || simultaneousGestureRecognizer == self.pinchGestureRecognizer)) {
+
+        /* Only allow simultaneous gestures when one of the gestures is singleTouch or doubleTouch */
+        if (gestureRecognizer == self.singleTouchGestureRecognizer || gestureRecognizer == self.doubleTouchGestureRecognizer) {
             return true
         }
-      return false
+        return false
     }
 }

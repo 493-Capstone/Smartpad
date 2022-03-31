@@ -10,11 +10,12 @@ import UIKit
 
 // Portions of this code follow the apple documentation:
 // https://developer.apple.com/documentation/uikit/touches_presses_and_gestures/implementing_a_custom_gesture_recognizer/implementing_a_discrete_gesture_recognizer
-//
 
 // Custom gesture for longtouch then drag
+// Rules:
 // 1. The user must long touch for 1s
 // 2. The user must pan
+
 class UIDragPanGestureRecognizer:
     UIGestureRecognizer {
     /* Geture states */
@@ -63,23 +64,16 @@ class UIDragPanGestureRecognizer:
         /* Only recognizer 1 finger touches */
         if touches.count != 1 {
             self.state = .failed
+            return
 //            print("Failed, too many touches")
         }
-        else {
-            // Capture the first touch and store some information about it.
-            if self.trackedTouch == nil {
-                self.trackedTouch = touches.first
-                self.initialPos = (self.trackedTouch?.location(in: self.view))!
-                self.startPos = self.initialPos
-            }
-            else {
-               // Ignore all but the first touch.
-               for touch in touches {
-                  if touch != self.trackedTouch {
-                     self.ignore(touch, for: event)
-                  }
-               }
-            }
+
+
+        if self.trackedTouch == nil {
+            /* Capture the first touch and store some information about it. */
+            self.trackedTouch = touches.first
+            self.initialPos = (self.trackedTouch?.location(in: self.view))!
+            self.startPos = self.initialPos
 
             work = DispatchWorkItem(block: {
                 self.currentPhase = .started
@@ -88,6 +82,14 @@ class UIDragPanGestureRecognizer:
 
             /* After 1s, consider the touch to be a "long touch" */
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: work!);
+        }
+        else {
+            /* This is not the first touch, ignore all touches except the first one. */
+            for touch in touches {
+                if touch != self.trackedTouch {
+                    self.ignore(touch, for: event)
+                }
+            }
         }
     }
 
