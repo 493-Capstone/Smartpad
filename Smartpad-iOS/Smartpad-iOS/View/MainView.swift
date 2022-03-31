@@ -14,8 +14,11 @@ class MainView: UIView {
         drawConnStatus()
     }
 
-    /* Diameter in pixels */
-    private let diameter = CGFloat(200.0)
+    /* Diameter in pixels when the vertical size is not compact */
+    private let normalDiameter = CGFloat(200.0)
+
+    /* Diameter in pixels when the vertical size is compact */
+    private let compactDiameter = CGFloat(150.0)
 
     /* Line width in pixels*/
     private let lineWidth = CGFloat(5.0)
@@ -25,6 +28,11 @@ class MainView: UIView {
      */
     func drawConnStatus() {
         var path = UIBezierPath()
+
+        /* If the height is compact, draw a smaller connection status indicator*/
+        let diameter = (UIScreen.main.traitCollection.verticalSizeClass == UIUserInterfaceSizeClass.compact)
+                        ? (compactDiameter) : (normalDiameter)
+
         path = UIBezierPath(ovalIn: CGRect(x: self.bounds.midX - (diameter / 2),
                                            y: self.bounds.midY - (diameter / 2),
                                            width: diameter, height: diameter))
