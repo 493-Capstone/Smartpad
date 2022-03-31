@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         /* Setup the connection manager */
-        connectionManager = ConnectionManager()
+        connectionManager = ConnectionManagerAccess.connectionManager
         connectionManager?.mainVC = self
         
         /* Setup the haptic engine */

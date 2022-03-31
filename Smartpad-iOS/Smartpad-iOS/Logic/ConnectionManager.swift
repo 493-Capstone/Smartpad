@@ -67,6 +67,19 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     func stopHosting(){
         advertiser?.stopAdvertisingPeer()
     }
+    
+    func unpairDevice(){
+        guard let p2pSession = p2pSession else {
+            return
+        }
+        
+        let connData = ConnectionData()
+        connData.setSelectedPeer(name: "")
+        p2pSession.disconnect()
+        advertiser?.stopAdvertisingPeer()
+        
+        
+    }
 
 }
 
@@ -87,6 +100,8 @@ extension ConnectionManager{
         switch state {
             case .connected:
                 print("Connected: \(peerID.displayName)")
+                let connData = ConnectionData()
+                connData.setSelectedPeer(name: peerID.displayName)
                 mainVC.connStatus = ConnStatus.PairedAndConnected
                 self.advertiser?.stopAdvertisingPeer()
                 DispatchQueue.main.async {
