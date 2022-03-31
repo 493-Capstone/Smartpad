@@ -73,15 +73,15 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         guard let p2pSession = p2pSession else {
             return
         }
-        
-        let connData = ConnectionData()
-        connData.setSelectedPeer(name: "")
+
+        ConnectionData().setSelectedPeer(name: "")
         p2pSession.disconnect()
         advertiser?.stopAdvertisingPeer()
-        
-        
-    }
 
+        /* Update the UI to show that we are no longer paired */
+        mainVC.connStatus = ConnStatus.Unpaired
+        self.mainVC.updateConnInfoUI()
+    }
 }
 
 extension ConnectionManager{
