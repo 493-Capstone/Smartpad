@@ -120,7 +120,7 @@ class UIDragPanGestureRecognizer:
             {
                 /* Update the origin point for panning, otherwise the mouse jumps after the first pan occurs */
                 startPos = newPos
-                print("Ignored involuntary movement!")
+//                print("Ignored involuntary movement!")
             }
 
             return

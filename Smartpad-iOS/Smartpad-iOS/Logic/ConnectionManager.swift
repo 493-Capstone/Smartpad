@@ -64,6 +64,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
     }
+
     func stopHosting(){
         advertiser?.stopAdvertisingPeer()
     }
@@ -86,29 +87,25 @@ extension ConnectionManager{
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state {
             case .connected:
-                print("Connected: \(peerID.displayName)")
+//                print("Connected: \(peerID.displayName)")
                 mainVC.connStatus = ConnStatus.PairedAndConnected
                 self.advertiser?.stopAdvertisingPeer()
-                DispatchQueue.main.async {
-                    self.mainVC.updateConnInfoUI()
-                    
-                }
+                self.mainVC.updateConnInfoUI()
                 
             case .connecting:
-                print("Connecting: \(peerID.displayName)")
-                mainVC.connStatus = ConnStatus.PairedAndDisconnected
-                DispatchQueue.main.async {
-                    self.mainVC.updateConnInfoUI()
-                    
-                }
+                break
+            // Don't show anything, this doesn't correspond to any state in ConnStatus (at least for now)
+//                print("Connecting: \(peerID.displayName)")
+//                mainVC.connStatus = ConnStatus.PairedAndDisconnected
+//                self.mainVC.updateConnInfoUI()
+
             case .notConnected:
-                print("notConnected: \(peerID.displayName)")
-                mainVC.connStatus = ConnStatus.Unpaired
+//                print("notConnected: \(peerID.displayName)")
+                /* We are still paired, just lost connection. Update the UI to indicate that we are attempting to reconnect */
+                mainVC.connStatus = ConnStatus.PairedAndDisconnected
                 advertiser?.stopAdvertisingPeer()
-                DispatchQueue.main.async {
-                    self.mainVC.updateConnInfoUI()
-                    
-                }
+                self.mainVC.updateConnInfoUI()
+
         @unknown default:
             print("unknown state")
             
