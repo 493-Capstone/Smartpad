@@ -259,7 +259,7 @@ class MainViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        /* Re-draw the connection status and the spinner whenever the device is rotated */
+        /* Re-draw the connection status whenever the device is rotated */
         (self.view as! MainView).status = self.connStatus
         self.view.setNeedsDisplay()
     }
