@@ -25,6 +25,7 @@ class SettingsViewController: UIViewController {
 
         connectionManager = ConnectionManagerAccess.connectionManager
 
+        changeNameField.text = ConnectionData().getDeviceName()
         updateConnUI()
     }
 
@@ -38,9 +39,10 @@ class SettingsViewController: UIViewController {
             unpairButton.isHidden = true
 
             changeNameLabel.text = "Change name:"
-            changeNameField.isHidden = false
-            // TODO: set changeNameField text to the current device identifier
-            changeNameField.text = "TODO: Fill me in with the current id!"
+
+            /* Enable the field and set the color to its default */
+            changeNameField.isEnabled = true
+            changeNameField.textColor = .label
         }
         else {
             let connData = ConnectionData()
@@ -49,7 +51,10 @@ class SettingsViewController: UIViewController {
             unpairButton.isHidden = false
 
             changeNameLabel.text = "Changing name is not available when paired."
-            changeNameField.isHidden = true
+
+            /* Disable and "grey out" the field */
+            changeNameField.isEnabled = false
+            changeNameField.textColor = .secondaryLabel
         }
     }
     
@@ -66,11 +71,16 @@ class SettingsViewController: UIViewController {
      * @brief Callback for when the "change name" field is modified
      */
     @IBAction func nameChanged() {
-        if let unwrapped = changeNameField.text {
-            print("The new identifier is: ", unwrapped)
+        guard let unwrapped = changeNameField.text else { return }
+
+        if (unwrapped != "") {
+            ConnectionData().setDeviceName(name: unwrapped)
         }
         else {
-            print("Identifier cannot be empty!")
+            /* User tried to enter an empty name */
+            let emptyNameAlert = UIAlertController(title: "Smartpad", message: "Device name cannot be empty!", preferredStyle: .alert)
+            emptyNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in}))
+            present(emptyNameAlert, animated: true)
         }
     }
 }

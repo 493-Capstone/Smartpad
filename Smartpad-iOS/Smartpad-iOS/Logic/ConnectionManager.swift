@@ -24,6 +24,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         
         startP2PSession()
     }
+
     func sendMotion(gesture: GesturePacket) {
         guard let p2pSession = p2pSession else {return}
         guard !p2pSession.connectedPeers.isEmpty else {
@@ -44,21 +45,40 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
             try? p2pSession.send(command, toPeers: p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
         }
     }
-    
+
     /**
-            This method starts broadcasting for peers
+     * @brief Sets up the peer-to-peer session but doesn't advertise
      */
     func startP2PSession(){
         let connData = ConnectionData()
         peerID = MCPeerID.init(displayName: connData.getDeviceName())
         p2pSession = MCSession.init(peer: peerID!, securityIdentity: nil, encryptionPreference: .required)
         p2pSession?.delegate = self
-
-        connStatus = .PairedAndDisconnected
-        mainVC?.updateConnInfoUI()
     }
 
+    func stopP2PSession() {
+        guard let p2pSession = p2pSession else {
+            return
+        }
+
+        p2pSession.disconnect()
+    }
+
+    /**
+     * Restart the peer-to-peer session. Since the display name cannot be changed while the session
+     * is running, this is required whenever we wish to update our display name.
+     */
+    func restartP2PSession() {
+        stopP2PSession()
+        startP2PSession()
+    }
+
+    /**
+     * @brief Start advertising for nearby devices
+     */
     func startHosting(){
+        restartP2PSession()
+
         advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "smartpad")
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
@@ -93,14 +113,6 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
 
         connStatus = .Unpaired
         mainVC?.updateConnInfoUI()
-    }
-    
-    func stopP2PSession(){
-        guard let p2pSession = p2pSession else {
-            return
-        }
-        
-        p2pSession.disconnect()
     }
 
     /**
@@ -175,6 +187,7 @@ extension ConnectionManager{
                 return
             }
         }
+
         let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName)' wants to connect", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Accept", style: .default, handler: { [weak self] _ in
             invitationHandler(true, self?.p2pSession)
