@@ -46,7 +46,7 @@ class SettingsViewController: UIViewController {
         }
         else {
             let connData = ConnectionData()
-            let pairedDeviceName = connData.getSelectedPeer()
+            let pairedDeviceName = connData.getSelectedPeer(formatString: true)
             pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
             unpairButton.isHidden = false
 
