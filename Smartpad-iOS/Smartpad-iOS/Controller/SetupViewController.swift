@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SetupViewController: UIViewController {
+class SetupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var idField: UITextField!
     
@@ -18,7 +18,32 @@ class SetupViewController: UIViewController {
         if (connData.getCurrentDeviceUUID() == ""){
             connData.setCurrentDeviceUUID(uuid: UUID().uuidString)
         }
+        idField.delegate = self
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " '")).inverted // append white space and apostrophe
+        let components = string.components(separatedBy: allowedCharacters)
+        let filtered = components.joined(separator: "")
+        
+        if string == filtered {
+            
+            return true
+
+        } else {
+            
+            return false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.text == "" { // is empty
+            return false
+        }
+        return true
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if ConnectionData().getDeviceName() != "" {
             let vc = storyboard?.instantiateViewController(withIdentifier: "main") as! MainViewController
