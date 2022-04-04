@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,12 +18,14 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jwb-Xg-Yfp">
                                 <rect key="frame" x="383.5" y="90" width="129" height="39"/>
+                                <accessibility key="accessibilityConfiguration" hint="welcome message" identifier="welcomeMessage" label="welcome"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a device name. The name will be shown to other devices for pairing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jn-Fu-8zZ">
                                 <rect key="frame" x="264.5" y="135" width="367" height="144"/>
+                                <accessibility key="accessibilityConfiguration" hint="displays input prompt" identifier="inputDescription" label="Input description"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="2jn-Fu-8zZ" secondAttribute="height" multiplier="367:144" id="Jeq-HY-jLP"/>
                                     <constraint firstAttribute="height" constant="144" id="n38-fr-S4q"/>
@@ -40,6 +42,7 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQj-kw-748">
                                 <rect key="frame" x="298" y="245" width="300" height="34"/>
+                                <accessibility key="accessibilityConfiguration" hint="takes input device name" identifier="deviceNameInput" label="device name input"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="hX4-Eb-yc2"/>
                                 </constraints>
@@ -81,6 +84,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="connInfoLabel" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muU-FI-9pD">
                                 <rect key="frame" x="394" y="50" width="108" height="20.5"/>
+                                <accessibility key="accessibilityConfiguration" hint="shows connection status" identifier="connectionStatusLabel" label="connection status label"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -88,6 +92,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ioM-n6-mw4">
                                 <rect key="frame" x="713" y="16" width="110" height="40"/>
+                                <accessibility key="accessibilityConfiguration" hint="opens settings or cancels broadcast" identifier="settingsButton" label="settings or cancel button"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="110" id="727-TV-vQY"/>
@@ -101,6 +106,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDK-VQ-tMM">
                                 <rect key="frame" x="393" y="333" width="110" height="40"/>
+                                <accessibility key="accessibilityConfiguration" hint="begins broadcasting" identifier="pairButton" label="pair now"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="Fh5-Hr-1MD"/>
                                     <constraint firstAttribute="height" constant="40" id="vnb-4h-aoi"/>
@@ -246,6 +252,7 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="35k-w4-yUg">
                                 <rect key="frame" x="298" y="96" width="300" height="35"/>
+                                <accessibility key="accessibilityConfiguration" hint="changes device name" identifier="changeNameInput" label="change name input"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="y4n-WV-kdz"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="yq7-25-5Yr"/>
@@ -259,6 +266,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0J-GB-gww">
                                 <rect key="frame" x="713" y="16" width="110" height="40"/>
+                                <accessibility key="accessibilityConfiguration" hint="returns to main view" identifier="backButton" label="back button settings"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6a9-vv-SOq"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="cIM-nJ-6oa"/>
@@ -273,6 +281,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ChangeNameLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUh-3b-9Q3">
                                 <rect key="frame" x="364" y="45" width="168" height="25"/>
+                                <accessibility key="accessibilityConfiguration" hint="change the device name" identifier="changeNameLabel" label="change device name label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="kyN-KF-N35"/>
                                 </constraints>
@@ -282,6 +291,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whd-G7-s3K">
                                 <rect key="frame" x="393" y="333" width="110" height="40"/>
+                                <accessibility key="accessibilityConfiguration" hint="unpairs device" identifier="unpairButton" label="unpair button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="ICJ-Qn-PNX"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="WX6-vD-Lti"/>
@@ -294,6 +304,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PairedInfoLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meQ-Pt-V7s">
                                 <rect key="frame" x="380.5" y="293" width="135.5" height="20"/>
+                                <accessibility key="accessibilityConfiguration" hint="displays the pairing information in settings" identifier="pairingInfoLabel" label="pairing information"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="5LE-Zd-N1s"/>
                                 </constraints>
