@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet var backButton: UIButton!
     @IBOutlet var pairedInfoLabel: UILabel!
@@ -27,6 +27,43 @@ class SettingsViewController: UIViewController {
 
         changeNameField.text = ConnectionData().getDeviceName()
         updateConnUI()
+        changeNameField.delegate = self
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " '")).inverted // append white space and apostrophe
+        let components = string.components(separatedBy: allowedCharacters)
+        let filtered = components.joined(separator: "")
+        
+        if string == filtered {
+            
+            return true
+
+        } else {
+            
+            return false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        guard let unwrapped = changeNameField.text else { return true}
+
+        if (unwrapped != "") {
+            ConnectionData().setDeviceName(name: unwrapped)
+            return true
+        }
+        else {
+            /* User tried to enter an empty name */
+            let connData = ConnectionData()
+            let emptyNameAlert = UIAlertController(title: "Smartpad", message: "Device name cannot be empty!", preferredStyle: .alert)
+            emptyNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in}))
+            present(emptyNameAlert, animated: true)
+            // set it back to original name
+            textField.text = connData.getDeviceName()
+            return true
+        }
     }
 
     /**
@@ -46,7 +83,7 @@ class SettingsViewController: UIViewController {
         }
         else {
             let connData = ConnectionData()
-            let pairedDeviceName = connData.getSelectedPeer()
+            let pairedDeviceName = connData.getSelectedPeer(formatString: true)
             pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
             unpairButton.isHidden = false
 
@@ -67,20 +104,4 @@ class SettingsViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    /**
-     * @brief Callback for when the "change name" field is modified
-     */
-    @IBAction func nameChanged() {
-        guard let unwrapped = changeNameField.text else { return }
-
-        if (unwrapped != "") {
-            ConnectionData().setDeviceName(name: unwrapped)
-        }
-        else {
-            /* User tried to enter an empty name */
-            let emptyNameAlert = UIAlertController(title: "Smartpad", message: "Device name cannot be empty!", preferredStyle: .alert)
-            emptyNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in}))
-            present(emptyNameAlert, animated: true)
-        }
-    }
 }

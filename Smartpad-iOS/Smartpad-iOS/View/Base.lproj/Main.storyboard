@@ -34,12 +34,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODO: LOGO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1Y-mV-4Xy">
-                                <rect key="frame" x="353.5" y="-32" width="189" height="39"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQj-kw-748">
                                 <rect key="frame" x="298" y="245" width="300" height="34"/>
                                 <accessibility key="accessibilityConfiguration" hint="takes input device name" identifier="deviceNameInput" label="device name input"/>
@@ -52,18 +46,21 @@
                                     <action selector="didFillText" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="oBt-g8-FcH"/>
                                 </connections>
                             </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="bg0-3d-xQd">
+                                <rect key="frame" x="328" y="-46" width="240" height="128"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="bg0-3d-xQd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2yi-9o-9lK"/>
                             <constraint firstItem="2jn-Fu-8zZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Jku-Pc-hWc"/>
                             <constraint firstItem="cQj-kw-748" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aYM-Za-hah"/>
                             <constraint firstItem="Jwb-Xg-Yfp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dSx-5b-5Wd"/>
                             <constraint firstItem="Jwb-Xg-Yfp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-97.5" id="fX9-P6-IJf"/>
                             <constraint firstItem="2jn-Fu-8zZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kNm-fI-afN"/>
                             <constraint firstItem="cQj-kw-748" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="55" id="lD4-mD-qcf"/>
-                            <constraint firstItem="X1Y-mV-4Xy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xVd-JW-tjU"/>
-                            <constraint firstItem="X1Y-mV-4Xy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-219.5" id="zdP-3G-hfQ"/>
+                            <constraint firstItem="bg0-3d-xQd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-219.5" id="om7-zG-suo"/>
                         </constraints>
                     </view>
                     <connections>
@@ -259,10 +256,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="didFillText" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="PUl-ZB-Cpi"/>
-                                    <action selector="nameChanged" destination="SHJ-Ox-EXv" eventType="primaryActionTriggered" id="TWI-IF-Dz3"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0J-GB-gww">
                                 <rect key="frame" x="713" y="16" width="110" height="40"/>
@@ -373,6 +366,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Image" width="225" height="225"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -31,25 +31,5 @@ class ConnectionDataTest: XCTestCase {
         }
     }
 
-    func testDataSet() throws {
-        // Arrange
-        let data = ConnectionData()
-        // Act
-        let uuidValue = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
-        data.setSelectedDeviceUUID(uuid: uuidValue)
-        //Assert
-        XCTAssertEqual(UserDefaults.standard.string(forKey: ConnectionKeys.connDeviceUUID), "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
-    }
-    
-    func testDataGet() throws {
-        // Arrange
-        let data = ConnectionData()
-        // Act
-        let uuidValue = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
-        data.setSelectedDeviceUUID(uuid: uuidValue)
-        //Assert
-        XCTAssertEqual(data.getSelectedDeviceUUID(), "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
-    }
-    
 
 }
