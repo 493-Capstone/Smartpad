@@ -32,10 +32,10 @@ class Smartpad_iOSUITests: XCTestCase {
             app.textFields.element.typeText("ui test ios\n")
         }
         XCTAssertTrue(app.isDisplayingMain)
-        app.buttons["Pair now"].tap()
-        app.buttons["Cancel"].tap()
-        app.buttons["Settings"].tap()
-        app.buttons["Back"].tap()
+        app.buttons["pairButton"].tap()
+        app.buttons["settingsButton"].tap()
+        app.buttons["settingsButton"].tap()
+        app.buttons["backButton"].tap()
     }
 }
 
