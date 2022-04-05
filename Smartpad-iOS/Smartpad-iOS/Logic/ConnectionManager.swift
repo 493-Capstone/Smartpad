@@ -51,7 +51,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
      */
     func startP2PSession(){
         let connData = ConnectionData()
-        peerID = MCPeerID.init(displayName: connData.getDeviceName())
+        peerID = MCPeerID.init(displayName: connData.getDeviceName() + "|" + connData.getCurrentDeviceUUID())
         p2pSession = MCSession.init(peer: peerID!, securityIdentity: nil, encryptionPreference: .required)
         p2pSession?.delegate = self
     }
@@ -188,7 +188,7 @@ extension ConnectionManager{
             }
         }
 
-        let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName)' wants to connect", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName.components(separatedBy: "|")[0])' wants to connect", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Accept", style: .default, handler: { [weak self] _ in
             invitationHandler(true, self?.p2pSession)
         }))

@@ -259,10 +259,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="didFillText" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="PUl-ZB-Cpi"/>
-                                    <action selector="nameChanged" destination="SHJ-Ox-EXv" eventType="primaryActionTriggered" id="TWI-IF-Dz3"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0J-GB-gww">
                                 <rect key="frame" x="713" y="16" width="110" height="40"/>
