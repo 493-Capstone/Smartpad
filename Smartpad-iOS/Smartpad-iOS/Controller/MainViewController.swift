@@ -217,9 +217,16 @@ class MainViewController: UIViewController {
      * @param[in] bool Whether gestures should be recognized
      */
     func shouldRecognizeGestures(enabled: Bool) {
+#if LATENCY_TEST_SUITE
+        /* For latency testing, we disable all gesture recognizers... */
+        for recognizer in self.view.gestureRecognizers! {
+            recognizer.isEnabled = false
+        }
+#else
         for recognizer in self.view.gestureRecognizers! {
             recognizer.isEnabled = enabled
         }
+#endif // LATENCY_TEST_SUITE
     }
 
     /**

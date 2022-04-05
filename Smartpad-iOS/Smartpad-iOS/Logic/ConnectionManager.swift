@@ -18,7 +18,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     private var advertiser: MCNearbyServiceAdvertiser?
     var mainVC: MainViewController!
     private var connStatus = ConnStatus.Unpaired
-    
+
     override init(){
         super.init()
         
@@ -174,8 +174,15 @@ extension ConnectionManager{
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        
+#if LATENCY_TEST_SUITE
+    /* We only expect to receive messages from the host when latency testing, just return the packet to sender */
+    DispatchQueue.main.async {
+        guard let p2pSession = self.p2pSession else {return}
+        try? p2pSession.send(data, toPeers: p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
     }
+#endif // LATENCY_TEST_SUITE
+    }
+
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         // creates dialog box to accept or reject the connection request
         let connData = ConnectionData()
