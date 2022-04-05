@@ -13,6 +13,7 @@ class SetupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "setupView"
     }
     override func viewDidAppear(_ animated: Bool) {
         if ConnectionData().getDeviceName() != "" {
