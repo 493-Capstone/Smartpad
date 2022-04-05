@@ -12,10 +12,9 @@ import MultipeerConnectivity
 /* From https://www.raywenderlich.com/10608020-getting-started-with-core-haptics */
 
 class MainViewController: UIViewController {
-    var connectionManager: ConnectionManager?
+    private var connectionManager: ConnectionManager?
     var hapticManager: HapticManager?
     var previousCoordinates: CGPoint = CGPoint.init()
-    var connStatus: ConnStatus = ConnStatus.Unpaired
     /* For encoding packets */
     let encoder = JSONEncoder()
 
@@ -50,11 +49,9 @@ class MainViewController: UIViewController {
         connectionManager = ConnectionManagerAccess.connectionManager
         connectionManager?.mainVC = self
         let connData = ConnectionData()
-        if(connData.getSelectedPeer() != ""){
+        if (connData.getSelectedPeer() != "") {
 //            print("I have peer")
             connectionManager?.startHosting()
-            self.connStatus = ConnStatus.PairedAndDisconnected
-            self.updateConnInfoUI()
         }
 
         /* Setup the haptic engine */
@@ -194,10 +191,10 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func settingsButtonPressed() {
-        if (connStatus == ConnStatus.UnpairedAndBroadcasting) {
-            /* The settings button is actually a cancel button in this case*/
-            connStatus = ConnStatus.Unpaired
-            updateConnInfoUI()
+        let connStatus = connectionManager?.getConnStatus()
+
+        if (connStatus == .UnpairedAndBroadcasting) {
+            /* The settings button is actually a cancel button in this case */
             connectionManager?.stopHosting()
         }
         else {
@@ -211,8 +208,6 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func pairButtonPressed() {
-        connStatus = ConnStatus.UnpairedAndBroadcasting
-        updateConnInfoUI()
         guard let connectionManager = connectionManager else { return }
         connectionManager.startHosting()
     }
@@ -223,17 +218,26 @@ class MainViewController: UIViewController {
      * @param[in] bool Whether gestures should be recognized
      */
     func shouldRecognizeGestures(enabled: Bool) {
+#if LATENCY_TEST_SUITE
+        /* For latency testing, we disable all gesture recognizers... */
+        for recognizer in self.view.gestureRecognizers! {
+            recognizer.isEnabled = false
+        }
+#else
         for recognizer in self.view.gestureRecognizers! {
             recognizer.isEnabled = enabled
         }
+#endif // LATENCY_TEST_SUITE
     }
 
     /**
      * @brief Updates all of the UI that is related to the current connection status
      */
     func updateConnInfoUI() {
+        guard let connectionManager = connectionManager else { return }
+
         DispatchQueue.main.async {
-            switch self.connStatus {
+            switch connectionManager.getConnStatus() {
                 case ConnStatus.Unpaired:
                     self.settingsButton.setTitle("Settings", for: .normal)
 
@@ -280,7 +284,6 @@ class MainViewController: UIViewController {
             }
 
             /* Draw the connection status and the spinner */
-            (self.view as! MainView).status = self.connStatus
             self.view.setNeedsDisplay()
         }
     }
@@ -289,7 +292,6 @@ class MainViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         /* Re-draw the connection status whenever the device is rotated */
-        (self.view as! MainView).status = self.connStatus
         self.view.setNeedsDisplay()
     }
 }

@@ -7,13 +7,15 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet var backButton: UIButton!
     @IBOutlet var pairedInfoLabel: UILabel!
     @IBOutlet var changeNameLabel: UILabel!
     @IBOutlet var changeNameField: UITextField!
     @IBOutlet var unpairButton: UIButton!
+
+    private var connectionManager: ConnectionManager?
     
     /* Passed on initialization */
     var connStatus: ConnStatus!
@@ -21,54 +23,85 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if (connStatus == ConnStatus.Unpaired) {
-            /* Show settings for unpaired device */
-            setUIToUnpairedStatus()
+        connectionManager = ConnectionManagerAccess.connectionManager
+
+        changeNameField.text = ConnectionData().getDeviceName()
+        updateConnUI()
+        changeNameField.delegate = self
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " '")).inverted // append white space and apostrophe
+        let components = string.components(separatedBy: allowedCharacters)
+        let filtered = components.joined(separator: "")
+        
+        if string == filtered {
+            
+            return true
+
+        } else {
+            
+            return false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        guard let unwrapped = changeNameField.text else { return true}
+
+        if (unwrapped != "") {
+            ConnectionData().setDeviceName(name: unwrapped)
+            return true
         }
         else {
-            /* Show settings for paired device */
-            setUIToPairedStatus()
+            /* User tried to enter an empty name */
+            let connData = ConnectionData()
+            let emptyNameAlert = UIAlertController(title: "Smartpad", message: "Device name cannot be empty!", preferredStyle: .alert)
+            emptyNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in}))
+            present(emptyNameAlert, animated: true)
+            // set it back to original name
+            textField.text = connData.getDeviceName()
+            return true
         }
     }
-    
-    private func setUIToUnpairedStatus(){
-        pairedInfoLabel.text = "Device is not paired."
-        unpairButton.isHidden = true
-        
-        changeNameLabel.text = "Change name:"
-        changeNameField.isHidden = false
-        // TODO: set changeNameField text to the current device identifier
-        changeNameField.text = "TODO: Fill me in with the current id!"
-    }
-    
-    private func setUIToPairedStatus(){
-        let connData = ConnectionData()
-        let pairedDeviceName = connData.getSelectedPeer()
-        pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
-        unpairButton.isHidden = false
 
-        changeNameLabel.text = "Changing name is not available when paired."
-        changeNameField.isHidden = true
+    /**
+     * @brief Update the portions of the UI that are dependent on whether we are paired or not
+     */
+    private func updateConnUI() {
+        let connStatus = connectionManager?.getConnStatus()
+        if (connStatus == ConnStatus.Unpaired) {
+            pairedInfoLabel.text = "Device is not paired."
+            unpairButton.isHidden = true
+
+            changeNameLabel.text = "Change name:"
+
+            /* Enable the field and set the color to its default */
+            changeNameField.isEnabled = true
+            changeNameField.textColor = .label
+        }
+        else {
+            let connData = ConnectionData()
+            let pairedDeviceName = connData.getSelectedPeer(formatString: true)
+            pairedInfoLabel.text = "Device is paired: \(pairedDeviceName)"
+            unpairButton.isHidden = false
+
+            changeNameLabel.text = "Changing name is not available when paired."
+
+            /* Disable and "grey out" the field */
+            changeNameField.isEnabled = false
+            changeNameField.textColor = .secondaryLabel
+        }
     }
     
     @IBAction func unpairDevice(_ sender: UIButton) {
-        ConnectionManagerAccess.connectionManager.unpairDevice()
-        setUIToUnpairedStatus()
+        connectionManager?.unpairDevice()
+        updateConnUI()
     }
     
     @IBAction func backButtonPressed() {
         dismiss(animated: true, completion: nil)
     }
 
-    /**
-     * @brief Callback for when the "change name" field is modified
-     */
-    @IBAction func nameChanged() {
-        if let unwrapped = changeNameField.text {
-            print("The new identifier is: ", unwrapped)
-        }
-        else {
-            print("Identifier cannot be empty!")
-        }
-    }
 }
