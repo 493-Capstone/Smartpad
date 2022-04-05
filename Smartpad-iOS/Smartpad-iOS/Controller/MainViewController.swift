@@ -42,6 +42,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "mainView"
         // Do any additional setup after loading the view.
 
         /* Setup the connection manager */

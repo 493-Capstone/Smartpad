@@ -13,6 +13,7 @@ class SetupViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "setupView"
         let connData = ConnectionData()
         // set the device uuid upon initial setup
         if (connData.getCurrentDeviceUUID() == ""){
