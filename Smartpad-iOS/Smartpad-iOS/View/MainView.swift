@@ -5,6 +5,14 @@
 //  Created by Hudson Shykowski on 2022-03-11.
 //
 
+/**
+ * Draws the connection status circle.
+ *
+ * Required for connection status functional requirement FR15
+ *
+ * Required for user interface requirement UIR-5 (device reconnect UI)
+ */
+
 import UIKit
 
 class MainView: UIView {

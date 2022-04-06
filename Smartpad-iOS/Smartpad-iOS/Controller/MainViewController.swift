@@ -5,11 +5,17 @@
 //  Created by alireza azimi on 2022-01-14.
 //
 
+/**
+ * Main view controller. Controls the main application view.
+ *
+ * Required for all iOS functional requirements.
+ *
+ * Required for user interface requirements UIR-3 (device pairing UI), and UIR-4 (sending gesture data)
+ */
+
 import UIKit
 import CoreHaptics
 import MultipeerConnectivity
-
-/* From https://www.raywenderlich.com/10608020-getting-started-with-core-haptics */
 
 class MainViewController: UIViewController {
     private var connectionManager: ConnectionManager?
@@ -39,18 +45,18 @@ class MainViewController: UIViewController {
     @IBOutlet var singleTouchGestureRecognizer: UILongPressGestureRecognizer!
     @IBOutlet var doubleTouchGestureRecognizer: UILongPressGestureRecognizer!
 
-    
+    /**
+     * @brief Called when the main view is initially loaded.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "mainView"
-        // Do any additional setup after loading the view.
 
         /* Setup the connection manager */
         connectionManager = ConnectionManagerAccess.connectionManager
         connectionManager?.mainVC = self
         let connData = ConnectionData()
         if (connData.getSelectedPeer() != "") {
-//            print("I have peer")
             connectionManager?.startHosting()
         }
 
@@ -59,24 +65,33 @@ class MainViewController: UIViewController {
 
         updateConnInfoUI()
     }
-    
 
+    /**
+     * @brief Event listener for whenever a touch occurs. Plays haptic events whenever a touch starts
+     * or ends.
+     */
     @IBAction func touchRecognizer(_ recognizer: UILongPressGestureRecognizer) {
         if (recognizer.state == .began) {
             hapticManager?.playTouchDown()
         }
-        if (recognizer.state == .ended) {
+        else if (recognizer.state == .ended) {
             hapticManager?.playTouchRelease()
         }
     }
-    
+
+    /**
+     * @brief Event listener for single-tap gestures. Required for functional requirement FR5
+     */
     @IBAction func singleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
         let payload = SingleTapPayload()
         let encPayload = try? encoder.encode(payload)
         let packet = GesturePacket(touchType: GestureType.SingleTap, payload: encPayload)
         connectionManager?.sendMotion(gesture: packet)
     }
-    
+
+    /**
+     * @brief Event listener for two concurrent single-taps gestures. Required for functional requirement FR5
+     */
     @IBAction func singleTapDoubleClickRecognizer(_ recognizer: UITapGestureRecognizer) {
         let payload = SingleTapDoubleClickPayload()
         let encPayload = try? encoder.encode(payload)
@@ -84,6 +99,9 @@ class MainViewController: UIViewController {
         connectionManager?.sendMotion(gesture: packet)
     }
 
+    /**
+     * @brief Event listener for two-finger tap gestures. Required for functional requirement FR6
+     */
     @IBAction func doubleTapRecognizer(_ recognizer: UITapGestureRecognizer) {
         let payload = DoubleTapPayload()
         let encPayload = try? encoder.encode(payload)
@@ -91,12 +109,18 @@ class MainViewController: UIViewController {
         connectionManager?.sendMotion(gesture: packet)
     }
 
+    /**
+     * @brief Event listener for single-finger pan. Required for functional requirement FR8
+     */
     @IBAction func singlePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
         processPanEvent(recognizer: recognizer, panStarted: GestureType.SinglePanStarted,
                         panChanged: GestureType.SinglePanChanged,
                         panEnded: GestureType.SinglePanEnded)
     }
 
+    /**
+     * @brief Event listener for double-finger pan. Required for functional requirement FR9
+     */
     @IBAction func doublePanRecognizer(_ recognizer: UIPanGestureRecognizer) {
         processPanEvent(recognizer: recognizer, panStarted: GestureType.DoublePanStarted,
                         panChanged: GestureType.DoublePanChanged,
@@ -105,10 +129,11 @@ class MainViewController: UIViewController {
 
     /**
      * @brief Build a pan packet based on the recognizer and send it to the connection manager
+     *
      * @param[in] recognizer:     Gesture recognizer
-     * @param[in] panStarted:    Packet type to send when a "started" event is detected by the recognizer
-     * @param[in] panChanged: Packet type to send when a "changed" event is detected by the recognizer
-     * @param[in] panEnded:     Pakcet type to send when an "ended" event is detected by the recognizer
+     * @param[in] panStarted:     Packet type to send when a "started" event is detected by the recognizer
+     * @param[in] panChanged:     Packet type to send when a "changed" event is detected by the recognizer
+     * @param[in] panEnded:       Packet type to send when an "ended" event is detected by the recognizer
      */
     func processPanEvent(recognizer: UIPanGestureRecognizer, panStarted: GestureType, panChanged: GestureType, panEnded: GestureType) {
         // Get the translation
@@ -133,11 +158,12 @@ class MainViewController: UIViewController {
             return
         }
 
-//        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
-
         connectionManager?.sendMotion(gesture: packet)
     }
 
+    /**
+     * @brief Event listener for pinch gestures. Required for functional requirement FR10
+     */
     @IBAction func pinchRecognizer(_ recognizer: UIPinchGestureRecognizer) {
         var packet: GesturePacket!
         let payload = PinchPayload(scale: Float(recognizer.scale))
@@ -157,12 +183,14 @@ class MainViewController: UIViewController {
             return
         }
 
-        // Reset the scale so that we only get incremental changes
-        // in scale throughout a pinch event.
+        // Reset the scale so that we only get incremental changes in scale throughout a pinch event.
         recognizer.scale = 1.0
         connectionManager?.sendMotion(gesture: packet)
     }
 
+    /**
+     * @brief Event listener for drag pan gestures. Required for functional requirement FR7
+     */
     @IBAction func dragPanRecognizer(_ recognizer: UIDragPanGestureRecognizer) {
         // Get the translation
 
@@ -185,11 +213,13 @@ class MainViewController: UIViewController {
             return
         }
 
-//        print(packet.touchType!, " - xTrans: ", payload.xTranslation!, " yTrans: ", payload.yTranslation!)
-
         connectionManager?.sendMotion(gesture: packet)
     }
-    
+
+    /**
+     * @brief Callback for when the settings button is pressed. When we are broadcasting,
+     * this acts as a cancel button
+     */
     @IBAction func settingsButtonPressed() {
         let connStatus = connectionManager?.getConnStatus()
 
@@ -207,6 +237,9 @@ class MainViewController: UIViewController {
         }
     }
 
+    /**
+     * @brief Callback for when the pair button is pressed
+     */
     @IBAction func pairButtonPressed() {
         guard let connectionManager = connectionManager else { return }
         connectionManager.startHosting()
@@ -219,7 +252,7 @@ class MainViewController: UIViewController {
      */
     func shouldRecognizeGestures(enabled: Bool) {
 #if LATENCY_TEST_SUITE
-        /* For latency testing, we disable all gesture recognizers... */
+        /* For latency testing, we disable all gesture recognizers */
         for recognizer in self.view.gestureRecognizers! {
             recognizer.isEnabled = false
         }
@@ -288,14 +321,20 @@ class MainViewController: UIViewController {
         }
     }
 
+    /**
+     * @brief Run whenever the view's size changes. For us, this only occurs when the device is rotated
+     */
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        /* Re-draw the connection status whenever the device is rotated */
+        /* Re-draw the connection status */
         self.view.setNeedsDisplay()
     }
 }
 
+/**
+ * @brief Delegate for preventing simultaneous recognition of complex gesture (i.e. pinch and pan)
+ */
 extension MainViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
       _ gestureRecognizer: UIGestureRecognizer,

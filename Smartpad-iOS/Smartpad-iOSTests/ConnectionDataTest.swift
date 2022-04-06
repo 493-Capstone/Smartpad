@@ -10,15 +10,7 @@ import XCTest
 @testable import Smartpad_iOS
 
 class ConnectionDataTest: XCTestCase {
-    override func setUp(){
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        super.setUp()
-
-        
-    }
-
-    override func tearDown(){
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
         super.tearDown()
         resetDefaults()
     }
@@ -31,7 +23,7 @@ class ConnectionDataTest: XCTestCase {
         }
     }
     
-    func testSetCurrentDeviceName(){
+    func testSetCurrentDeviceName() {
         // Arrange
         let data = ConnectionData()
         // Act
@@ -41,7 +33,7 @@ class ConnectionDataTest: XCTestCase {
         XCTAssertEqual(UserDefaults.standard.string(forKey: ConnectionKeys.currDeviceName), "my iPhone")
     }
     
-    func testGetCurrentDeviceName(){
+    func testGetCurrentDeviceName() {
         //Arrange
         resetDefaults()
         let data = ConnectionData()
@@ -50,10 +42,9 @@ class ConnectionDataTest: XCTestCase {
         data.setDeviceName(name: name)
         //Assert
         XCTAssertEqual(data.getDeviceName(), "my iPhone")
-        
     }
     
-    func testSetCurrentDeviceUUID(){
+    func testSetCurrentDeviceUUID() {
         // Arrange
         resetDefaults()
         let uuidString = UUID().uuidString
@@ -62,11 +53,9 @@ class ConnectionDataTest: XCTestCase {
         data.setCurrentDeviceUUID(uuid: uuidString)
         // Assert
         XCTAssertEqual(UserDefaults.standard.string(forKey: ConnectionKeys.currDeviceUUID), uuidString)
-        
-        
     }
     
-    func testGetCurrentDeviceUUID(){
+    func testGetCurrentDeviceUUID() {
         // Arrange
         resetDefaults()
         let uuidString = UUID().uuidString
@@ -75,10 +64,9 @@ class ConnectionDataTest: XCTestCase {
         data.setCurrentDeviceUUID(uuid: uuidString)
         // Assert
         XCTAssertEqual(data.getCurrentDeviceUUID(), uuidString)
-        
     }
-    
-    func testSetPeerName(){
+
+    func testSetPeerName() {
         // Arrange
         resetDefaults()
         let data = ConnectionData()
@@ -86,10 +74,9 @@ class ConnectionDataTest: XCTestCase {
         data.setSelectedPeer(name: "Ali's macbook")
         // Assert
         XCTAssertEqual(UserDefaults.standard.string(forKey: ConnectionKeys.selectedPeerName), "Ali's macbook")
-        
     }
     
-    func testGetPeerName(){
+    func testGetPeerName() {
         // Arrange
         resetDefaults()
         let data = ConnectionData()
@@ -97,7 +84,5 @@ class ConnectionDataTest: XCTestCase {
         data.setSelectedPeer(name: "Ali's macbook")
         // Assert
         XCTAssertEqual(data.getSelectedPeer(), "Ali's macbook")
-        
     }
-    
 }

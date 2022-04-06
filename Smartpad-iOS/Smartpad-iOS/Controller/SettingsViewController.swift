@@ -5,10 +5,16 @@
 //  Created by Hudson Shykowski on 2022-03-11.
 //
 
+/**
+ * Settings view controller. Controls the settings application view.
+ *
+ * Required for functional requirements FR1 (changing device identifier) and FR3 (forgetting device)
+ * Required for user interface requirement UIR-2 (unpairing UI).
+ */
+
 import UIKit
 
-class SettingsViewController: UIViewController, UITextFieldDelegate{
-    
+class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var backButton: UIButton!
     @IBOutlet var pairedInfoLabel: UILabel!
     @IBOutlet var changeNameLabel: UILabel!
@@ -29,23 +35,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate{
         updateConnUI()
         changeNameField.delegate = self
     }
-    
+
+    // TODO: Ali what does this do
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " '")).inverted // append white space and apostrophe
         let components = string.components(separatedBy: allowedCharacters)
         let filtered = components.joined(separator: "")
-        
-        if string == filtered {
-            
-            return true
 
-        } else {
-            
-            return false
-        }
+        return string == filtered
     }
-    
+
+    // TODO: Ali what does this do
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         guard let unwrapped = changeNameField.text else { return true}
@@ -94,14 +95,19 @@ class SettingsViewController: UIViewController, UITextFieldDelegate{
             changeNameField.textColor = .secondaryLabel
         }
     }
-    
+
+    /**
+     * @brief Callback for when the unpair device button is pressed
+     */
     @IBAction func unpairDevice(_ sender: UIButton) {
         connectionManager?.unpairDevice()
         updateConnUI()
     }
-    
+
+    /**
+     * @brief Callback for when the back button is pressed
+     */
     @IBAction func backButtonPressed() {
         dismiss(animated: true, completion: nil)
     }
-
 }

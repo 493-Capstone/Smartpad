@@ -8,11 +8,6 @@
 import XCTest
 
 class Smartpad_iOSUITestsLaunchTests: XCTestCase {
-
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
-    }
-
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
