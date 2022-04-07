@@ -14,7 +14,7 @@ import MultipeerConnectivity
  * Required for Device Pairing (FR1-FR4), and required for Connection Status (FR15 & FR16)
  */
 class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate{
-    
+
     private var peerID: MCPeerID!
     private var p2pSession: MCSession?
     private var p2pBrowser: MCNearbyServiceBrowser!
@@ -22,11 +22,11 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     private var advertiser: MCNearbyServiceAdvertiser?
     var mainVC: MainViewController!
     private var connStatus = ConnStatus.Unpaired
-    
+
     // constructor
-    override init(){
+    override init() {
         super.init()
-        
+
         startP2PSession()
     }
     
@@ -85,11 +85,11 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
      */
     func startHosting(){
         restartP2PSession()
-        
+
         advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "smartpad")
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
-        
+
         if (ConnectionData().getSelectedPeer() == "") {
             /* We have no peer, which means we are advertising to try to find a peer */
             connStatus = .UnpairedAndBroadcasting
@@ -98,7 +98,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
             /* We have a peer, which means we are disconnected and trying to reconnect */
             connStatus = .PairedAndDisconnected
         }
-        
+
         mainVC?.updateConnInfoUI()
     }
 
@@ -118,7 +118,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         guard let p2pSession = p2pSession else {
             return
         }
-        
+
         let connData = ConnectionData()
         connData.setSelectedPeer(name: "")
         p2pSession.disconnect()
@@ -136,7 +136,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     }
 }
 
-extension ConnectionManager{
+extension ConnectionManager {
 
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         // Not used
