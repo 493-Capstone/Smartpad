@@ -36,7 +36,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         changeNameField.delegate = self
     }
 
-    // TODO: Ali what does this do
+    /**
+     * @bried Delegate (callback) method restricts types of characters that can be entered in textfield
+     */
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " '")).inverted // append white space and apostrophe
@@ -46,7 +48,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         return string == filtered
     }
 
-    // TODO: Ali what does this do
+    /**
+     * @brief Delegate method handle's when return button is pressed on the screen keyboard
+     */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         guard let unwrapped = changeNameField.text else { return true}
