@@ -524,7 +524,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 39Q7V34K3W;
+				DEVELOPMENT_TEAM = 8T46R4T879;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smartpad-iOS/Info.plist";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "smartpad trackpad";
@@ -538,7 +538,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -555,7 +555,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 39Q7V34K3W;
+				DEVELOPMENT_TEAM = 8T46R4T879;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smartpad-iOS/Info.plist";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "smartpad trackpad";
@@ -569,7 +569,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alirezaazimi.Smartpad-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

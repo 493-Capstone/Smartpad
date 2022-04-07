@@ -17,12 +17,28 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     private var previousCoordinates: CGPoint = CGPoint.init()
     private var advertiser: MCNearbyServiceAdvertiser?
     var mainVC: MainViewController!
+    var keepAliveTimer : Timer?
     private var connStatus = ConnStatus.Unpaired
 
     override init(){
         super.init()
         
         startP2PSession()
+//        keepAliveTimer =  Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(sendActivationSignal), userInfo: nil, repeats: true)
+    }
+    
+    private func startTimer () {
+        guard keepAliveTimer == nil else { return }
+
+      }
+    
+    private func stopTimer() {
+        print("stop timer")
+        keepAliveTimer?.invalidate()
+    }
+    @objc private func sendActivationSignal(){
+        guard let p2pSession = self.p2pSession else {return}
+        try? p2pSession.send(Data("a".utf8), toPeers: p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
     }
 
     func sendMotion(gesture: GesturePacket) {
@@ -144,8 +160,8 @@ extension ConnectionManager{
                 connData.setSelectedPeer(name: peerID.displayName)
                 connStatus = ConnStatus.PairedAndConnected
                 self.advertiser?.stopAdvertisingPeer()
+                self.startTimer()
                 self.mainVC.updateConnInfoUI()
-                
             case .connecting:
                 break
 
@@ -153,6 +169,7 @@ extension ConnectionManager{
 //                print("notConnected: \(peerID.displayName)")
                 /* We are still paired, just lost connection. Update the UI to indicate that we are attempting to reconnect */
                 let connData = ConnectionData()
+                print("Not conected")
                 if(connData.getSelectedPeer() != ""){
                     if(p2pSession?.connectedPeers.count == 0){
                         // Ensure no peers are connected
@@ -165,6 +182,7 @@ extension ConnectionManager{
                     advertiser?.stopAdvertisingPeer()
                     self.mainVC.updateConnInfoUI()
                 }
+                self.stopTimer()
 
 
         @unknown default:
