@@ -50,7 +50,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
             try? p2pSession.send(command, toPeers: p2pSession.connectedPeers, with: MCSessionSendDataMode.unreliable)
         }
     }
-    
+
     /**
      * method initializss MCSession objects. Does not advertise.
      */
@@ -60,7 +60,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         p2pSession = MCSession.init(peer: peerID!, securityIdentity: nil, encryptionPreference: .required)
         p2pSession?.delegate = self
     }
-    
+
     /**
      * method disconnects peer from session
      */
@@ -70,7 +70,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         }
         p2pSession.disconnect()
     }
-    
+
     /**
      * Restart the peer-to-peer session. Since the display name cannot be changed while the session
      * is running, this is required whenever we wish to update our display name.
@@ -79,7 +79,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         stopP2PSession()
         startP2PSession()
     }
-    
+
     /**
      * Start advertising for nearby devices
      */
@@ -101,7 +101,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         
         mainVC?.updateConnInfoUI()
     }
-    
+
     /**
      * Stop advertising for nearby devices
      */
@@ -110,7 +110,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         connStatus = .Unpaired
         mainVC?.updateConnInfoUI()
     }
-    
+
     /**
      * Unpairs and disconnects the device
      */
@@ -127,7 +127,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         connStatus = .Unpaired
         mainVC?.updateConnInfoUI()
     }
-    
+
     /**
      * @brief get the current connection status
      */
@@ -137,19 +137,19 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
 }
 
 extension ConnectionManager{
-    
+
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         // Not used
     }
-    
+
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
         // Not used
     }
-    
+
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         // Not used
     }
-    
+
     /**
      * Session delegate for handling connection status (connected, not connected, connecting)
      */
@@ -180,10 +180,9 @@ extension ConnectionManager{
             }
         @unknown default:
             print("unknown state")
-            
         }
     }
-    
+
     /**
      * Delegate handles data received
      */
@@ -196,7 +195,7 @@ extension ConnectionManager{
         }
 #endif // LATENCY_TEST_SUITE
     }
-    
+
     /**
      * Delegate method handles invitations to connect from nearby peers
      */
@@ -210,7 +209,7 @@ extension ConnectionManager{
                 return
             }
         }
-        
+
         let ac = UIAlertController(title: "Smartpad", message: "'\(peerID.displayName.components(separatedBy: "|")[0])' wants to connect", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Accept", style: .default, handler: { [weak self] _ in
             invitationHandler(true, self?.p2pSession)
