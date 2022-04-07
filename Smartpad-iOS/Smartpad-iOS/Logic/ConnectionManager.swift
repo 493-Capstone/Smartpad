@@ -29,7 +29,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
 
         startP2PSession()
     }
-    
+
     /**
      * method handles sending messages to device.
      * Parameter GesturePacket: Value of type GesturePacket to send
