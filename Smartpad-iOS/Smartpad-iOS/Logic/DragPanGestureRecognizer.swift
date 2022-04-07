@@ -5,6 +5,12 @@
 //  Created by Hudson Shykowski on 2022-03-22.
 //
 
+/**
+ * Custom gesture recognizer implementation for drag-pan
+ *
+ * Required for functional requirement FR7 (drag-pan)
+ */
+
 import Foundation
 import UIKit
 
@@ -16,8 +22,7 @@ import UIKit
 // 1. The user must long touch for 1s
 // 2. The user must pan
 
-class UIDragPanGestureRecognizer:
-    UIGestureRecognizer {
+class UIDragPanGestureRecognizer: UIGestureRecognizer {
     /* Geture states */
     private enum DragPanPhases {
         case notStarted /* State when we have touched down but not long touched */
@@ -58,6 +63,9 @@ class UIDragPanGestureRecognizer:
         hapticManager = HapticManager()
     }
 
+    /**
+     * @brief Called whenever a new touch occurs
+     */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesBegan(touches, with: event)
 
@@ -65,9 +73,7 @@ class UIDragPanGestureRecognizer:
         if touches.count != 1 {
             self.state = .failed
             return
-//            print("Failed, too many touches")
         }
-
 
         if self.trackedTouch == nil {
             /* Capture the first touch and store some information about it. */
@@ -93,6 +99,9 @@ class UIDragPanGestureRecognizer:
         }
     }
 
+    /**
+     * @brief Called whenever an existing touch changes
+     */
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesMoved(touches, with: event)
 
@@ -116,13 +125,11 @@ class UIDragPanGestureRecognizer:
             /* Allow for slight, involuntary movements */
             if (abs(distFromInitial.x) > tolerance || abs(distFromInitial.y) > tolerance) {
                 self.state = .failed
-//                print("Failed, didn't long press before panning")
             }
             else
             {
                 /* Update the origin point for panning, otherwise the mouse jumps after the first pan occurs */
                 startPos = newPos
-//                print("Ignored involuntary movement!")
             }
 
             return
@@ -133,37 +140,43 @@ class UIDragPanGestureRecognizer:
 
         currentPhase = .changed
         self.state = .changed
-//            print("Changed")
     }
 
+    /**
+     * @brief Called whenever an existing touch ends
+     */
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesEnded(touches, with: event)
         if (currentPhase == .notStarted || currentPhase == .started) {
             /* We released our finger too early or before panning */
             self.state = .failed
-//            print("Failed, we released our touch too early or didn't pan")
         }
         else {
             self.state = .recognized
         }
     }
 
+    /**
+     * @brief Called whenever a system event (such as an alert) cancels the touch
+     */
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesCancelled(touches, with: event)
         self.state = .cancelled
 
         resetVars()
-
-//        print("Cancelled")
     }
 
+    /**
+     * @brief Called to reset the recognizer
+     */
     override func reset() {
         super.reset()
         resetVars()
-
-//        print("Reset")
     }
 
+    /**
+     * @brief Reset class variables
+     */
     private func resetVars() {
         /* Cancel the timer's work first to avoid race conditions */
         work?.cancel()

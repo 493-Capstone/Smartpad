@@ -10,7 +10,7 @@ import MultipeerConnectivity
 
 class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate{
 
-    
+
     private var peerID: MCPeerID!
     private var p2pSession: MCSession?
     private var p2pBrowser: MCNearbyServiceBrowser!
@@ -30,7 +30,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         guard !p2pSession.connectedPeers.isEmpty else {
             return
         }
-        
+
         DispatchQueue.main.async {
             let encoder = JSONEncoder()
             guard let command = try? encoder.encode(gesture)
@@ -172,7 +172,7 @@ extension ConnectionManager{
             
         }
     }
-    
+
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
 #if LATENCY_TEST_SUITE
     /* We only expect to receive messages from the host when latency testing, just return the packet to sender */

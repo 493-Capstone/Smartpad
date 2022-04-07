@@ -4,11 +4,17 @@
 //
 //  Created by Alireza Azimi on 2022-03-08.
 //
+
 import Foundation
 import CoreHaptics
 
-// Source consulted: https://www.raywenderlich.com/10608020-getting-started-with-core-haptics
+/**
+ * Class responsible for playing haptic events.
+ *
+ * Required for haptics functional requirements (FR13 & FR14)
+ */
 
+// Source consulted: https://www.raywenderlich.com/10608020-getting-started-with-core-haptics
 class HapticManager {
   let hapticEngine: CHHapticEngine
 
