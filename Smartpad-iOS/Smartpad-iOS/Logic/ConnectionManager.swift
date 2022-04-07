@@ -23,6 +23,7 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
     var mainVC: MainViewController!
     private var connStatus = ConnStatus.Unpaired
     
+    // constructor
     override init(){
         super.init()
         
@@ -38,7 +39,6 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         guard !p2pSession.connectedPeers.isEmpty else {
             return
         }
-        
         DispatchQueue.main.async {
             let encoder = JSONEncoder()
             guard let command = try? encoder.encode(gesture)
@@ -68,7 +68,6 @@ class ConnectionManager:NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDe
         guard let p2pSession = p2pSession else {
             return
         }
-        
         p2pSession.disconnect()
     }
     
@@ -162,10 +161,8 @@ extension ConnectionManager{
             connStatus = ConnStatus.PairedAndConnected
             self.advertiser?.stopAdvertisingPeer()
             self.mainVC.updateConnInfoUI()
-            
         case .connecting:
             break
-            
         case .notConnected:
             /* We are still paired, just lost connection. Update the UI to indicate that we are attempting to reconnect */
             let connData = ConnectionData()
@@ -181,8 +178,6 @@ extension ConnectionManager{
                 advertiser?.stopAdvertisingPeer()
                 self.mainVC.updateConnInfoUI()
             }
-            
-            
         @unknown default:
             print("unknown state")
             
@@ -212,7 +207,6 @@ extension ConnectionManager{
             if(connData.getSelectedPeer() == peerID.displayName){
                 // accept invite and return
                 invitationHandler(true, self.p2pSession)
-                
                 return
             }
         }
